@@ -49,19 +49,20 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/buttondangky"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
-            android:text="Register"
-            android:textSize="20dp" />
-
-        <Button
             android:id="@+id/buttondangnhap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
             android:text="Login"
+            android:textSize="20dp"/>
+
+        <Button
+            android:id="@+id/buttonchuyentrangdangky"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register"
             android:textSize="20dp" />
+
     </LinearLayout>
 
     </LinearLayout>

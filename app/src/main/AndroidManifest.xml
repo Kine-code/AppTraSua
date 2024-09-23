@@ -24,8 +24,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".GUI.ProductDetailsActivity" />
+        <activity android:name=".GUI.RegisterActivity"/>
         <activity android:name=".GUI.CartActivity" />
         <activity android:name=".GUI.MainActivity"/>
+
     </application>
 
 </manifest>
