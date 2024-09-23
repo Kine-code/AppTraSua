@@ -20,7 +20,6 @@ import com.nhom2.appbantrasua.R;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.mail.MessagingException;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText txtUserName,fullName,  email, password;
@@ -74,8 +73,8 @@ public class RegisterActivity extends AppCompatActivity {
                     runOnUiThread(() ->
                             Toast.makeText(RegisterActivity.this, "Đã gửi mã xác thực đến email!", Toast.LENGTH_SHORT).show()
                     );
-                } catch (MessagingException e) {
-                    e.printStackTrace();
+                } catch ( Exception e) {
+
                     runOnUiThread(() ->
                             Toast.makeText(RegisterActivity.this, "Gửi email thất bại!", Toast.LENGTH_SHORT).show()
                     );

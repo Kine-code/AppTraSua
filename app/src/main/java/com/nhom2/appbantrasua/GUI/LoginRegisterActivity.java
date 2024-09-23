@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.mail.MessagingException;
 
 public class LoginRegisterActivity extends AppCompatActivity
 {
@@ -55,8 +54,4 @@ public class LoginRegisterActivity extends AppCompatActivity
         //Login
         btnNextPageRegister = findViewById(R.id.buttonchuyentrangdangky);
     }
-
-
-
-
 }
