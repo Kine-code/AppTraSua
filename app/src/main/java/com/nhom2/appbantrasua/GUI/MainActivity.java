@@ -1,4 +1,4 @@
-package com.nhom2.appbantrasua;
+package com.nhom2.appbantrasua.GUI;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.nhom2.appbantrasua.Entity.Product;
+import com.nhom2.appbantrasua.ImageSliderAdapter;
+import com.nhom2.appbantrasua.ProductAdapter;
+import com.nhom2.appbantrasua.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

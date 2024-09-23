@@ -1,6 +1,8 @@
 package com.nhom2.appbantrasua;
 
 
+import com.nhom2.appbantrasua.Entity.Product;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.nhom2.appbantrasua;
+package com.nhom2.appbantrasua.GUI;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.nhom2.appbantrasua.CartManager;
+import com.nhom2.appbantrasua.Entity.Product;
+import com.nhom2.appbantrasua.R;
 
 import java.text.NumberFormat;
 import java.util.Locale;

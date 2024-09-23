@@ -1,4 +1,4 @@
-package com.nhom2.appbantrasua;
+package com.nhom2.appbantrasua.Entity;
 
 import java.io.Serializable;
 

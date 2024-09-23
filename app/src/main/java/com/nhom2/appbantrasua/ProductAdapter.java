@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nhom2.appbantrasua.Entity.Product;
+import com.nhom2.appbantrasua.GUI.ProductDetailsActivity;
+
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;

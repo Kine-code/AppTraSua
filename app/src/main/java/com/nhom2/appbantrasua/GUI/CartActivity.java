@@ -1,4 +1,4 @@
-package com.nhom2.appbantrasua;
+package com.nhom2.appbantrasua.GUI;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.nhom2.appbantrasua.CartAdapter;
+import com.nhom2.appbantrasua.CartManager;
+import com.nhom2.appbantrasua.Entity.Product;
+import com.nhom2.appbantrasua.PaymentActivity;
+import com.nhom2.appbantrasua.R;
 
 import java.text.NumberFormat;
 import java.util.List;
