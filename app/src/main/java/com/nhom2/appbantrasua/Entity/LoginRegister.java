@@ -9,11 +9,20 @@ public class LoginRegister implements Serializable {
     private String OTP;
     private String quyen;
 
-    public LoginRegister(String userName, String password, String OTP, String quyen) {
+    public LoginRegister(String userName, String password, String name, String OTP, String quyen) {
         this.userName = userName;
         this.password = password;
+        this.name = name;
         this.OTP = OTP;
         this.quyen = quyen;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUserName() {

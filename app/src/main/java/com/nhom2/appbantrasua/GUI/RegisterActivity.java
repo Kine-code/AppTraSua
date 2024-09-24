@@ -2,8 +2,6 @@ package com.nhom2.appbantrasua.GUI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.nhom2.appbantrasua.DAO.DAO_LoginRegister;
 import com.nhom2.appbantrasua.R;
 
 import java.util.concurrent.ExecutorService;
@@ -23,12 +22,24 @@ import java.util.concurrent.Executors;
 
 
 public class RegisterActivity extends AppCompatActivity {
-    EditText txtUserName,fullName,  email, password;
-    Button btnRegister,btnCancel;
+    EditText txtUserName, fullName, email, password, otpInput;
+
+    Button btnRegister, btnCancel, btnVerifyOTP, btnResendOTP;
     private ExecutorService executorService;
-    LinearLayout registerLayout,otpLayout ;
+    LinearLayout registerLayout, otpLayout;
+    String generatedOTP;
+
+    String _username;
+    String _pass;
+    String _email;
+    String _fullName;
 
 
+//region DAO
+    DAO_LoginRegister daoLoginRegister = new DAO_LoginRegister();
+
+
+//endregion
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,77 +53,92 @@ public class RegisterActivity extends AppCompatActivity {
         });
         AnhXa();
 
-
         executorService = Executors.newSingleThreadExecutor();
+
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerLayout.setVisibility(View.GONE); // Ẩn layout đăng ký
-                otpLayout.setVisibility(View.VISIBLE);
-                String _username = txtUserName.getText().toString();
-                String _pass = password.getText().toString();
-                String _email = email.getText().toString();
+                _username = txtUserName.getText().toString();
+                _pass = password.getText().toString();
+                _email = email.getText().toString();
+                _fullName = fullName.getText().toString();
+
+                // Validate fields first
+                if (_username.isEmpty() || _pass.isEmpty() || _email.isEmpty()) {
+                    Toast.makeText(RegisterActivity.this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Send OTP email first
+                    sendEmail(_username, _pass, _email);
+                }
+            }
+        });
+
+        // Verify OTP button
+        btnVerifyOTP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String inputOTP = otpInput.getText().toString();
+                if (inputOTP.equals(generatedOTP)) {
+                    Toast.makeText(RegisterActivity.this, "Xác thực thành công!", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    daoLoginRegister.InsertAccount(_username, _pass, _fullName, _email, "0");
+                    startActivity(intent);
+
+                    // Proceed with registration flow
+                } else {
+                    Toast.makeText(RegisterActivity.this, "Mã OTP không chính xác!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btnResendOTP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 sendEmail(_username, _pass, _email);
             }
         });
     }
 
+    public void sendEmail(String _username, String _pass, String _email) {
+        // Sử dụng ExecutorService để thực hiện việc gửi email trên background thread
+        executorService.execute(() -> {
+            try {
+                GmailSender sender = new GmailSender("nhompro88@gmail.com", "picz syny ykix mkmh");
+                generatedOTP = generateVerificationCode();
+                sender.sendMail(_email, "Mã xác thực", "Mã xác thực của bạn là: " + generatedOTP);
 
-    public void sendEmail(String _username, String _pass, String _email){
-        if (_username.isEmpty() || _pass.isEmpty() || _email.isEmpty()) {
-            Toast.makeText(RegisterActivity.this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
-        } else {
-            // Sử dụng ExecutorService để thực hiện việc gửi email trên background thread
-            executorService.execute(() -> {
-                try {
-                    GmailSender sender = new GmailSender("nhompro88@gmail.com", "picz syny ykix mkmh");
-                    String verificationCode = generateVerificationCode();
-                    sender.sendMail(_email, "Mã xác thực", "Mã xác thực của bạn là: " + verificationCode);
-
-                    // Cập nhật giao diện trên Main Thread sau khi gửi email thành công
-
-                    //sửa lai Mainactivity thành OTP
-                    Intent intent = new Intent(this, MainActivity.class);
-                    intent.putExtra("Phone Number", verificationCode);
-                    runOnUiThread(() ->
-                            Toast.makeText(RegisterActivity.this, "Đã gửi mã xác thực đến email!", Toast.LENGTH_SHORT).show()
-                    );
-                } catch ( Exception e) {
-
-                    runOnUiThread(() ->
-                            Toast.makeText(RegisterActivity.this, "Gửi email thất bại!", Toast.LENGTH_SHORT).show()
-                    );
-                }
-            });
-        }
+                // Show success message and switch to OTP layout
+                runOnUiThread(() -> {
+                    Toast.makeText(RegisterActivity.this, "Đã gửi mã xác thực đến email!", Toast.LENGTH_SHORT).show();
+                    registerLayout.setVisibility(View.GONE);  // Hide registration form
+                    otpLayout.setVisibility(View.VISIBLE);  // Show OTP form
+                });
+            } catch (Exception e) {
+                runOnUiThread(() -> {
+                    Toast.makeText(RegisterActivity.this, "Gửi email thất bại!", Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
     }
 
-
     private String generateVerificationCode() {
-        int randomCode = (int) (Math.random() * 90000) + 1000;
+        int randomCode = (int) (Math.random() * 90000) + 10000; // 5-digit OTP
         return String.valueOf(randomCode);
     }
 
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        // Đảm bảo tắt ExecutorService khi không còn cần thiết
-//        if (!executorService.isShutdown()) {
-//            executorService.shutdown();
-//        }
-//    }
-
-
-    void AnhXa(){
-
-        //Register
+    void AnhXa() {
+        // Register
         txtUserName = findViewById(R.id.edittextuser);
         fullName = findViewById(R.id.edittextfullname);
         email = findViewById(R.id.edittextemail);
         password = findViewById(R.id.edittextpass);
         btnRegister = findViewById(R.id.buttondangky);
         btnCancel = findViewById(R.id.buttoncancel);
-        //otp
+        // OTP
+        otpInput = findViewById(R.id.edittextotp);
+        btnVerifyOTP = findViewById(R.id.buttonverifyotp);
+        btnResendOTP = findViewById(R.id.buttonresendotp);
         registerLayout = findViewById(R.id.registerotp);
         otpLayout = findViewById(R.id.otp);
     }
