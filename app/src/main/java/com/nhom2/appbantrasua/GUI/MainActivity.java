@@ -2,6 +2,8 @@ package com.nhom2.appbantrasua.GUI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -16,9 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.nhom2.appbantrasua.DAO.DAO_Product;
 import com.nhom2.appbantrasua.Entity.Product;
 import com.nhom2.appbantrasua.ImageSliderAdapter;
-import com.nhom2.appbantrasua.ProductAdapter;
+import com.nhom2.appbantrasua.DAL.ProductAdapter;
 import com.nhom2.appbantrasua.R;
 
 import java.util.ArrayList;
@@ -30,6 +33,13 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private ViewPager viewPager;
     private ImageSliderAdapter imageSliderAdapter;
+
+// region DAO
+    DAO_Product daoProduct = new DAO_Product();
+
+
+// endregion
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         imageSliderAdapter = new ImageSliderAdapter(this, imageList);
         viewPager.setAdapter(imageSliderAdapter);
 
+        daoProduct.InitLogin(this);
+
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -52,16 +65,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // data tĩnh
-        List<Product> products = new ArrayList<>();
-        products.add(new Product("Trà sữa trân châu", "Trà sữa với trân châu truyền thống", 50000, R.drawable.anh_tra_sua_chan_trau));
-        products.add(new Product("Trà sữa matcha", "Trà sữa vị matcha thơm ngon", 55000, R.drawable.anh_tra_sua_matcha));
-        products.add(new Product("Trà sữa khoai môn", "Trà sữa vị khoai môn đặc biệt", 60000, R.drawable.anh_tra_sua_chan_trau));
-        products.add(new Product("Trà sữa trân châu", "Trà sữa với trân châu truyền thống", 50000, R.drawable.anh_tra_sua_chan_trau));
-        products.add(new Product("Trà sữa matcha", "Trà sữa vị matcha thơm ngon", 55000, R.drawable.anh_tra_sua_matcha));
-        products.add(new Product("Trà sữa khoai môn", "Trà sữa vị khoai môn đặc biệt", 60000, R.drawable.anh_tra_sua_chan_trau));
+        List<Product> products = daoProduct.ShowListProduct();
+////        // data tĩnh
         ProductAdapter adapter = new ProductAdapter(products);
         recyclerView.setAdapter(adapter);
+
+
         bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
             @Override
             public void onNavigationItemReselected(@NonNull MenuItem item) {

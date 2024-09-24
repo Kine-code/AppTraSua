@@ -24,7 +24,7 @@ import java.util.concurrent.Executors;
 
 
 public class RegisterActivity extends AppCompatActivity {
-    EditText txtUserName, fullName, email, password, otpInput;
+    EditText txtUserName, fullName, email, password, otpInput, confirmPassword;
 
     Button btnRegister, btnCancel, btnVerifyOTP, btnResendOTP;
     private ExecutorService executorService;
@@ -63,15 +63,21 @@ public class RegisterActivity extends AppCompatActivity {
                 _pass = password.getText().toString().trim();
                 _email = email.getText().toString().trim();
                 _fullName = fullName.getText().toString().trim();
-                
+
 
                 // Validate fields first
+
                 if (_username.isEmpty() || _pass.isEmpty() || _email.isEmpty() || _fullName.isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Send OTP email first
-                    sendEmail(_email);
+                    return;
                 }
+
+                if(!_pass.equals(confirmPassword.getText().toString().trim())){
+                    Toast.makeText(RegisterActivity.this, "Mật khẩu không trùng khớp", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                sendEmail(_email);
             }
         });
 
@@ -136,8 +142,11 @@ public class RegisterActivity extends AppCompatActivity {
         fullName = findViewById(R.id.edittextfullname);
         email = findViewById(R.id.edittextemail);
         password = findViewById(R.id.edittextpass);
+        confirmPassword = findViewById(R.id.edittextconfirmpass);
         btnRegister = findViewById(R.id.buttondangky);
         btnCancel = findViewById(R.id.buttoncancel);
+
+
         // OTP
         otpInput = findViewById(R.id.edittextotp);
         btnVerifyOTP = findViewById(R.id.buttonverifyotp);

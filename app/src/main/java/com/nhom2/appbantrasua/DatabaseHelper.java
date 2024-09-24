@@ -10,6 +10,10 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.nhom2.appbantrasua.Entity.Product;
+
+import java.util.ArrayList;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private Context context;
     public static final String DATABASE_NAME = "AppTraSua.db";
@@ -20,6 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_vERSION);
         try {
             QueryData("CREATE TABLE \"Account\" ( \"username\" TEXT NOT NULL, \"password\" TEXT, \"name\" TEXT, \"otp\" TEXT UNIQUE, \"quyen\" TEXT, PRIMARY KEY(\"username\") )");
+            QueryData("CREATE TABLE \"Product\" ( \"id\" INTEGER NOT NULL, \"nameproduct\" TEXT, \"description\" TEXT, \"price\" REAL, \"imgprd\" TEXT, PRIMARY KEY(\"id\") )");
         } catch (Exception e) {
             Log.e("Error", "database da ton tai");
         }
@@ -37,35 +42,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return database.rawQuery(query, null);
     }
 
-
-    //region Account
-    public boolean INSERT_ACCOUNT(String username, String password, String name, String otp, String quyen) {
+//region Account
+    public void INSERT_ACCOUNT(String username, String password, String name, String otp, String quyen) {
         SQLiteDatabase database = getWritableDatabase();
-//        String query = "INSERT INTO Account VALUES(?,?,?,?,?)";
-//        SQLiteStatement stm = database.compileStatement(query);
-//        //clear du lieu cu neu co
+        String query = "INSERT INTO Account VALUES(?,?,?,?,?)";
+        SQLiteStatement stm = database.compileStatement(query);
+        //clear du lieu cu neu co
 //        stm.clearBindings();
-//        stm.bindString(1,username);
-//        stm.bindString(2,password);
-//        stm.bindString(3,name);
-//        stm.bindString(4,otp);
-//        stm.bindString(5,quyen);
-//        stm.executeInsert();
-
-
-        contentValues = new ContentValues();
-        contentValues.put("username", username);
-        contentValues.put("password", password);
-        contentValues.put("name", name);
-        contentValues.put("otp", otp);
-        contentValues.put("quyen", quyen);
-        long check = database.insert("Account",null, contentValues);
-        if(check == 0){
-            return false;
-        }else{
-            return true;
-        }
+        stm.bindString(1,username);
+        stm.bindString(2,password);
+        stm.bindString(3,name);
+        stm.bindString(4,otp);
+        stm.bindString(5,quyen);
+        stm.executeInsert();
     }
+
+
+//endregion
+
+
+//region Produc
+
 
 
 //endregion
