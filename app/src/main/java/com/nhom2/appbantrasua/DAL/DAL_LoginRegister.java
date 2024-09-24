@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class DAL_LoginRegister implements Serializable {
 
-    public DatabaseHelper database;
+    public static DatabaseHelper database;
     public Context context;
 
     public void InitLogin(Context context) {

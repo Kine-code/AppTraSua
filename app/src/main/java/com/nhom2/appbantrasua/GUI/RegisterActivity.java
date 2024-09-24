@@ -16,6 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.nhom2.appbantrasua.DAO.DAO_LoginRegister;
+import com.nhom2.appbantrasua.DatabaseHelper;
 import com.nhom2.appbantrasua.R;
 
 import java.util.concurrent.ExecutorService;
@@ -34,11 +35,10 @@ public class RegisterActivity extends AppCompatActivity {
     String _pass;
     String _email;
     String _fullName;
-
+    public DatabaseHelper database;
 
 //region DAO
     DAO_LoginRegister daoLoginRegister = new DAO_LoginRegister();
-
 
 //endregion
 
@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
             return insets;
         });
         AnhXa();
-
+        daoLoginRegister.InitLogin(this);
         executorService = Executors.newSingleThreadExecutor();
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
                 _pass = password.getText().toString().trim();
                 _email = email.getText().toString().trim();
                 _fullName = fullName.getText().toString().trim();
+                
 
                 // Validate fields first
                 if (_username.isEmpty() || _pass.isEmpty() || _email.isEmpty() || _fullName.isEmpty()) {
@@ -83,7 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Xác thực thành công!", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                    Log.e("NEW ACCOUNT", _username+ "--" + _pass + "---" + _fullName+ "---"+ _email);
+
                     daoLoginRegister.InsertAccount(_username, _pass, _fullName, _email, "0");
                     startActivity(intent);
 

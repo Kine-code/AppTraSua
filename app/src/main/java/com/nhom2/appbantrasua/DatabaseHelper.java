@@ -39,18 +39,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     //region Account
-    public void INSERT_ACCOUNT(String username, String password, String name, String otp, String quyen) {
+    public boolean INSERT_ACCOUNT(String username, String password, String name, String otp, String quyen) {
         SQLiteDatabase database = getWritableDatabase();
-        String query = "INSERT INTO Account VALUES(?,?,?,?,?)";
-        SQLiteStatement stm = database.compileStatement(query);
-        //clear du lieu cu neu co
-        stm.clearBindings();
-        stm.bindString(1,username);
-        stm.bindString(2,password);
-        stm.bindString(3,name);
-        stm.bindString(4,otp);
-        stm.bindString(5,quyen);
-        stm.executeInsert();
+//        String query = "INSERT INTO Account VALUES(?,?,?,?,?)";
+//        SQLiteStatement stm = database.compileStatement(query);
+//        //clear du lieu cu neu co
+//        stm.clearBindings();
+//        stm.bindString(1,username);
+//        stm.bindString(2,password);
+//        stm.bindString(3,name);
+//        stm.bindString(4,otp);
+//        stm.bindString(5,quyen);
+//        stm.executeInsert();
+
+
+        contentValues = new ContentValues();
+        contentValues.put("username", username);
+        contentValues.put("password", password);
+        contentValues.put("name", name);
+        contentValues.put("otp", otp);
+        contentValues.put("quyen", quyen);
+        long check = database.insert("Account",null, contentValues);
+        if(check == 0){
+            return false;
+        }else{
+            return true;
+        }
     }
 
 
