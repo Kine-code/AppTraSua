@@ -2,6 +2,7 @@ package com.nhom2.appbantrasua.GUI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,17 +59,17 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                _username = txtUserName.getText().toString();
-                _pass = password.getText().toString();
-                _email = email.getText().toString();
-                _fullName = fullName.getText().toString();
+                _username = txtUserName.getText().toString().trim();
+                _pass = password.getText().toString().trim();
+                _email = email.getText().toString().trim();
+                _fullName = fullName.getText().toString().trim();
 
                 // Validate fields first
-                if (_username.isEmpty() || _pass.isEmpty() || _email.isEmpty()) {
+                if (_username.isEmpty() || _pass.isEmpty() || _email.isEmpty() || _fullName.isEmpty()) {
                     Toast.makeText(RegisterActivity.this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
                 } else {
                     // Send OTP email first
-                    sendEmail(_username, _pass, _email);
+                    sendEmail(_email);
                 }
             }
         });
@@ -82,6 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Xác thực thành công!", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    Log.e("NEW ACCOUNT", _username+ "--" + _pass + "---" + _fullName+ "---"+ _email);
                     daoLoginRegister.InsertAccount(_username, _pass, _fullName, _email, "0");
                     startActivity(intent);
 
@@ -95,12 +97,12 @@ public class RegisterActivity extends AppCompatActivity {
         btnResendOTP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendEmail(_username, _pass, _email);
+                sendEmail(_email);
             }
         });
     }
 
-    public void sendEmail(String _username, String _pass, String _email) {
+    public void sendEmail(String _email) {
         // Sử dụng ExecutorService để thực hiện việc gửi email trên background thread
         executorService.execute(() -> {
             try {
