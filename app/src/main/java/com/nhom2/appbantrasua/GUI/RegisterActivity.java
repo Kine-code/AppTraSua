@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -23,8 +24,10 @@ import java.util.concurrent.Executors;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText txtUserName,fullName,  email, password;
-    Button btnRegister;
+    Button btnRegister,btnCancel;
     private ExecutorService executorService;
+    LinearLayout registerLayout,otpLayout ;
+
 
 
     @Override
@@ -44,7 +47,8 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                registerLayout.setVisibility(View.GONE); // Ẩn layout đăng ký
+                otpLayout.setVisibility(View.VISIBLE);
                 String _username = txtUserName.getText().toString();
                 String _pass = password.getText().toString();
                 String _email = email.getText().toString();
@@ -107,6 +111,9 @@ public class RegisterActivity extends AppCompatActivity {
         email = findViewById(R.id.edittextemail);
         password = findViewById(R.id.edittextpass);
         btnRegister = findViewById(R.id.buttondangky);
-
+        btnCancel = findViewById(R.id.buttoncancel);
+        //otp
+        registerLayout = findViewById(R.id.registerotp);
+        otpLayout = findViewById(R.id.otp);
     }
 }
