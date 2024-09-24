@@ -50,7 +50,7 @@ public class CartActivity extends AppCompatActivity {
         cartRecyclerView.setAdapter(cartAdapter);
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        int totalPrice = cartItems.stream().mapToInt(Product::getPrice).sum();
+        double totalPrice = cartItems.stream().mapToDouble(Product::getPrice).sum();
         // Giả sử getPrice() trả về giá sản phẩm
 
         // Format total price with thousands separator

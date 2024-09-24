@@ -22,7 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class DAL_LoginRegister implements Serializable {
 
     public static DatabaseHelper database;
-    public Context context;
+    private Context context;
 
     public void InitLogin(Context context) {
         database = new DatabaseHelper(context);

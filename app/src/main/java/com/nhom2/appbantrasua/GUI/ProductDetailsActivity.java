@@ -1,5 +1,6 @@
 package com.nhom2.appbantrasua.GUI;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -42,7 +43,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
             // Đảm bảo product không null
             if (product != null) {
                 // Hiển thị thông tin sản phẩm
-                productImageView.setImageResource(product.getImageResource());
+                int imageResId = this.getResources().getIdentifier(product.getImageResource(), "drawable", this.getPackageName());
+                productImageView.setImageResource(imageResId);
                 productNameTextView.setText(product.getName());
                 productDescriptionTextView.setText(product.getDescription());
 

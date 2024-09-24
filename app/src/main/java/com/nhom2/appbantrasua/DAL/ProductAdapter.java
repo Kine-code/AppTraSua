@@ -1,5 +1,6 @@
-package com.nhom2.appbantrasua;
+package com.nhom2.appbantrasua.DAL;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nhom2.appbantrasua.Entity.Product;
 import com.nhom2.appbantrasua.GUI.ProductDetailsActivity;
+import com.nhom2.appbantrasua.R;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -20,7 +22,7 @@ import java.util.Locale;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     private List<Product> productList;
-
+    Context context;
     public ProductAdapter(List<Product> productList) {
         this.productList = productList;
     }
@@ -30,6 +32,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_product, parent, false);
+        context = parent.getContext();
         return new ProductViewHolder(view);
     }
 
@@ -44,7 +47,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.productName.setText(product.getName());
         holder.productDescription.setText(product.getDescription());
         holder.productPrice.setText(formattedPrice + " VND");
-        holder.productImage.setImageResource(product.getImageResource());
+        int imageResId = context.getResources().getIdentifier(product.getImageResource(), "drawable", context.getPackageName());
+        holder.productImage.setImageResource(imageResId);
 
         // Xử lý khi người dùng nhấn vào sản phẩm
         holder.itemView.setOnClickListener(v -> {
