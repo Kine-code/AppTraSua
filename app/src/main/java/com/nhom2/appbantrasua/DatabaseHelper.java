@@ -36,7 +36,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private void createDatabase(){
         if(!checkDatabase()){
-            this.getReadableDatabase();
+
+            // this.getReadableDatabase();
             try{
                 copyDatabase();
                 Log.d("Database_Helper", "Database copied");
