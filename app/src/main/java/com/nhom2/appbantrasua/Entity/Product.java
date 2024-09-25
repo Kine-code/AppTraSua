@@ -9,12 +9,22 @@ public class Product implements Serializable {
     private double price;
     private String imageResource;
 
+    private int Quality;
+
     public Product(int id, String name, String description, double price, String imageResource) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.imageResource = imageResource;
+    }
+
+    public int getQuality() {
+        return Quality;
+    }
+
+    public void setQuality(int quality) {
+        Quality = quality;
     }
 
     public int getId() {

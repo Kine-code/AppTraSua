@@ -8,7 +8,8 @@
         android:id="@+id/productImageView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:layout_marginTop="30dp"/>
 
     <TextView
         android:id="@+id/productNameTextView"
@@ -34,6 +35,35 @@
         android:textSize="18sp"
         android:layout_marginTop="16dp"
         android:textColor="@android:color/holo_green_dark" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="66dp">
+
+        <Button
+            android:id="@+id/decreaseQuantityButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="−" />
+
+        <TextView
+            android:id="@+id/quantityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:text="1"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/increaseQuantityButtonProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/addToCartButton"

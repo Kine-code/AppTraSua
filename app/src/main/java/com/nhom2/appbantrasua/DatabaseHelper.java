@@ -1,6 +1,5 @@
 package com.nhom2.appbantrasua;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,20 +7,24 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
-
-import com.nhom2.appbantrasua.Entity.Product;
-
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private Context context;
+    private final Context context;
     public static final String DATABASE_NAME = "AppTraSua.db";
     public static final int DATABASE_vERSION = 1;
-    private ContentValues contentValues;
 
-    public DatabaseHelper(@Nullable Context context) {
+    private static String DB_PATH = "";
+
+    public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_vERSION);
+        this.context = context;
+        DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
+        createDatabase();
+
         try {
             QueryData("CREATE TABLE \"Account\" ( \"username\" TEXT NOT NULL, \"password\" TEXT, \"name\" TEXT, \"otp\" TEXT UNIQUE, \"quyen\" TEXT, PRIMARY KEY(\"username\") )");
             QueryData("CREATE TABLE \"Product\" ( \"id\" INTEGER NOT NULL, \"nameproduct\" TEXT, \"description\" TEXT, \"price\" REAL, \"imgprd\" TEXT, PRIMARY KEY(\"id\") )");
@@ -29,6 +32,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.e("Error", "database da ton tai");
         }
     }
+
+
+    private void createDatabase(){
+        if(!checkDatabase()){
+            this.getReadableDatabase();
+            try{
+                copyDatabase();
+                Log.d("Database_Helper", "Database copied");
+            }catch (Exception e){
+                Log.e("Database_Helper", "Err copying database!", e);
+            }
+        }
+    }
+    private boolean checkDatabase() {
+        File dbFile = new File(DB_PATH + DATABASE_NAME);
+        return dbFile.exists();
+    }
+
+    private void copyDatabase() throws Exception{
+        InputStream inputStream = context.getAssets().open(DATABASE_NAME);
+        String outFileName = DB_PATH + DATABASE_NAME;
+        OutputStream outputStream = new FileOutputStream(outFileName);
+
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = inputStream.read(buffer)) > 0){
+            outputStream.write(buffer, 0, length);
+        }
+
+        outputStream.flush();
+        outputStream.close();
+        inputStream.close();
+    }
+
+
+
+
 
     //tao ham thuc hien cau lenh truy van
     public void QueryData(String query) {
