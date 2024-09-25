@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,21 +22,16 @@ import java.util.Locale;
 public class ProductDetailsActivity extends AppCompatActivity {
 
     private ImageView productImageView;
-    private TextView productNameTextView, productDescriptionTextView, productPriceTextView;
-    private Button addToCartButton;
+    private TextView productNameTextView, productDescriptionTextView, productPriceTextView, quantityTextView;
+    private Button addToCartButton, increaseQuatityButtonProduct, decreaseQuatityButtonProduct;
+
+    int quatity = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
-
-        // Initialize UI components
-        productImageView = findViewById(R.id.productImageView);
-        productNameTextView = findViewById(R.id.productNameTextView);
-        productDescriptionTextView = findViewById(R.id.productDescriptionTextView);
-        productPriceTextView = findViewById(R.id.productPriceTextView);
-        addToCartButton = findViewById(R.id.addToCartButton);
-
+        AnhXa();
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("product")) {
             Product product = (Product) intent.getSerializableExtra("product");
@@ -53,17 +49,64 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 String formattedPrice = numberFormat.format(product.getPrice());
                 productPriceTextView.setText(formattedPrice + " VND");
             }
+
+// ButtonQuatityProduct
+
+
+            increaseQuatityButtonProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    quatity = Integer.parseInt(quantityTextView.getText().toString());
+                    quatity++;
+                    quantityTextView.setText(String.valueOf(quatity));
+                }
+            });
+
+
+            decreaseQuatityButtonProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    quatity = Integer.parseInt(quantityTextView.getText().toString());
+                    if(quatity > 0)
+                        quatity--;
+                    else
+                        quatity = 0;
+                    quantityTextView.setText(String.valueOf(quatity));
+                }
+            });
+
+
             // Xử lý nút Thêm vào giỏ hàng
             addToCartButton.setOnClickListener(v -> {
-                CartManager.getInstance().addToCart(product);
-                Toast.makeText(this, product.getName() + " đã được thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
-                // mở CartActivity khi ấn thêm sản phẩm
+                product.setQuality(quatity);
+                if(quatity != 0){
+                    CartManager.getInstance().addToCart(product);
+                    Toast.makeText(this, product.getName() + " đã được thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
+                    // mở CartActivity khi ấn thêm sản phẩm
 //                Intent cartIntent = new Intent(ProductDetailsActivity.this, CartActivity.class);
 //                startActivity(cartIntent);
-                finish();
+                    finish();
+                }else{
+                    Toast.makeText(this, "Số lượng phaỉ lớn hơn 0", Toast.LENGTH_SHORT).show();
+                }
             });
         }
     }
+
+    void AnhXa(){
+        // Initialize UI components
+        productImageView = findViewById(R.id.productImageView);
+        productNameTextView = findViewById(R.id.productNameTextView);
+        productDescriptionTextView = findViewById(R.id.productDescriptionTextView);
+        productPriceTextView = findViewById(R.id.productPriceTextView);
+        addToCartButton = findViewById(R.id.addToCartButton);
+
+        //Button Increase and decrease
+        quantityTextView = findViewById(R.id.quantityTextView);
+        increaseQuatityButtonProduct = findViewById(R.id.increaseQuantityButtonProduct);
+        decreaseQuatityButtonProduct = findViewById(R.id.decreaseQuantityButton);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

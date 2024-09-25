@@ -11,7 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.nhom2.appbantrasua.CartAdapter;
+import com.nhom2.appbantrasua.DAL.CartAdapter;
 import com.nhom2.appbantrasua.CartManager;
 import com.nhom2.appbantrasua.Entity.Product;
 import com.nhom2.appbantrasua.PaymentActivity;
@@ -42,16 +42,24 @@ public class CartActivity extends AppCompatActivity {
         }
 
         cartRecyclerView = findViewById(R.id.cartRecyclerView);
-        totalPriceTextView = findViewById(R.id.totalPriceTextView);
-        payButton = findViewById(R.id.payButton);
-
+        TotalAmount();
         List<Product> cartItems = CartManager.getInstance().getCartItems();
-        cartAdapter = new CartAdapter(this, cartItems);
+        ReLoadRycyclerView(cartItems);
+    }
+
+    public void ReLoadRycyclerView(List<Product> cartItems){
+        cartAdapter = new CartAdapter(this, cartItems, this);
         cartRecyclerView.setAdapter(cartAdapter);
         cartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
 
-        double totalPrice = cartItems.stream().mapToDouble(Product::getPrice).sum();
+
+    public void TotalAmount(){
+        totalPriceTextView = findViewById(R.id.totalPriceTextView);
+        payButton = findViewById(R.id.payButton);
+        List<Product> cartItems = CartManager.getInstance().getCartItems();
         // Giả sử getPrice() trả về giá sản phẩm
+        double totalPrice = cartItems.stream().mapToDouble(item -> item.getPrice() * item.getQuality()).sum();
 
         // Format total price with thousands separator
         NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
