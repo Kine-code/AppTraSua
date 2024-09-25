@@ -1,49 +1,58 @@
 package com.nhom2.appbantrasua.DAL;
 
-import android.accounts.Account;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 
 import com.nhom2.appbantrasua.DatabaseHelper;
 import com.nhom2.appbantrasua.Entity.LoginRegister;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
-import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
-import android.widget.Toast;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 public class DAL_LoginRegister implements Serializable {
 
-    public static DatabaseHelper database;
+    public static DatabaseHelper databaseHelper;
     private Context context;
+    private ContentValues contentValues;
 
     public void InitLogin(Context context) {
-        database = new DatabaseHelper(context);
+        databaseHelper = new DatabaseHelper(context);
         this.context = context;
     }
 
     public void InsertAccount(String username, String password, String name, String otp, String quyen) {
-        database.INSERT_ACCOUNT(username, password, name, otp, quyen);
+        databaseHelper.INSERT_ACCOUNT(username, password, name, otp, quyen);
     }
 
-    public boolean checkAccount(String userName, String password) {
+    public LoginRegister checkAccount(String userName, String password) {
 
-        Cursor cursor = database.GetData( String.format("SELECT * FROM Account WHERE userName = '%s' AND password = '%s'" , userName,  password));
+        Cursor cursor = databaseHelper.GetData( String.format("SELECT * FROM Account WHERE userName = '%s' AND password = '%s'" , userName,  password));
 
         Log.e("Account", String.valueOf( cursor.getCount()));
 
         if( cursor.getCount() > 0){
-            Log.e("Account", "11111111");
-            return true;
+            try {
+                while (cursor.moveToNext()){
+                    return new LoginRegister(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+                }
+            } finally {
+                cursor.close(); // Đảm bảo đóng con trỏ
+            }
         }
-        return false;
+        return null;
     }
 
+    public boolean ChangePasswordAccount(String userName, String newPassword){
+        contentValues = new ContentValues();
+        contentValues.put("password", newPassword);
+        int check = databaseHelper.db.update("Account", contentValues, "userName = ?", new String[] {userName});
+        if(check == 0){
+            return false;
+        }else
+        {
+            return true;
+        }
+    }
 }

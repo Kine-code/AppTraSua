@@ -28,6 +28,7 @@
         <activity android:name=".GUI.RegisterActivity"/>
         <activity android:name=".GUI.CartActivity" />
         <activity android:name=".GUI.MainActivity"/>
+        <activity android:name=".GUI.AccountActivity"/>
 
     </application>
 

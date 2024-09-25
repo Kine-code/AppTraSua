@@ -1,6 +1,6 @@
 package com.nhom2.appbantrasua.GUI;
 
-import android.content.Context;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -23,8 +23,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private ImageView productImageView;
     private TextView productNameTextView, productDescriptionTextView, productPriceTextView, quantityTextView;
-    private Button addToCartButton, increaseQuatityButtonProduct, decreaseQuatityButtonProduct;
-
+    private Button addToCartButton,increaseQuatityButtonProduct,
+            decreaseQuatityButtonProduct,buttontoppingitem, buttonConfirmTopping;
     int quatity = 1;
 
     @Override
@@ -51,6 +51,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
 
 // ButtonQuatityProduct
+
+            buttontoppingitem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //DialogLogin();
+                }
+            });
 
 
             increaseQuatityButtonProduct.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +100,21 @@ public class ProductDetailsActivity extends AppCompatActivity {
         }
     }
 
+
+    private void DialogLogin(){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.item_topping);
+        buttonConfirmTopping = dialog.findViewById(R.id.confirmButtonTopping);
+        buttonConfirmTopping.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ProductDetailsActivity.this, "OKOKOKKOK", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        dialog.show();
+    }
+
     void AnhXa(){
         // Initialize UI components
         productImageView = findViewById(R.id.productImageView);
@@ -105,6 +127,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         quantityTextView = findViewById(R.id.quantityTextView);
         increaseQuatityButtonProduct = findViewById(R.id.increaseQuantityButtonProduct);
         decreaseQuatityButtonProduct = findViewById(R.id.decreaseQuantityButton);
+        buttontoppingitem = findViewById(R.id.buttontoppingitem);
     }
 
     @Override
