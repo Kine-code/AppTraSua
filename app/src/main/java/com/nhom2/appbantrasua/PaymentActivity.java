@@ -18,16 +18,16 @@ public class PaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
-        paymentSummaryTextView = findViewById(R.id.paymentSummaryTextView);
-
-        Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("totalPrice")) {
-            int totalPrice = intent.getIntExtra("totalPrice", 0);
-
-            // Format total price with thousands separator
-            NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
-            String formattedPrice = numberFormat.format(totalPrice);
-            paymentSummaryTextView.setText("Tổng tiền cần thanh toán: " + formattedPrice + " VND");
-        }
+//        paymentSummaryTextView = findViewById(R.id.paymentSummaryTextView);
+//
+//        Intent intent = getIntent();
+//        if (intent != null && intent.hasExtra("totalPrice")) {
+//            int totalPrice = intent.getIntExtra("totalPrice", 0);
+//
+//            // Format total price with thousands separator
+//            NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+//            String formattedPrice = numberFormat.format(totalPrice);
+//            paymentSummaryTextView.setText("Tổng tiền cần thanh toán: " + formattedPrice + " VND");
+//        }
     }
 }

@@ -100,6 +100,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="30dp"
+        android:layout_marginTop="100dp"
         android:visibility="gone">
         <EditText
             android:id="@+id/edittextpassaccount"
