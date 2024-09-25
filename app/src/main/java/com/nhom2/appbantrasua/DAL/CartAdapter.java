@@ -17,7 +17,9 @@ import com.nhom2.appbantrasua.Entity.Product;
 import com.nhom2.appbantrasua.GUI.CartActivity;
 import com.nhom2.appbantrasua.R;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
@@ -46,7 +48,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         int imageResId = context.getResources().getIdentifier(product.getImageResource(), "drawable", context.getPackageName());
         holder.productImageView.setImageResource(imageResId);
         holder.productNameTextView.setText(product.getName());
-        holder.productPriceTextView.setText(product.getPrice() + " VND");
+        NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+        String formattedPrice = numberFormat.format(product.getPrice());
+        holder.productPriceTextView.setText(formattedPrice + " VND");
         holder.productQualityTextView.setText(String.valueOf(product.getQuality()));
 
 
@@ -94,7 +98,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         TextView productNameTextView;
         TextView productPriceTextView;
         TextView productQualityTextView;
-        Button decreaseQuantityButtonCart, increaseQuantityButtonCart;
+        ImageView decreaseQuantityButtonCart, increaseQuantityButtonCart;
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);

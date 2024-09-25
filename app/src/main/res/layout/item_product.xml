@@ -2,7 +2,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp">
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/test"
+    android:paddingTop="4dp">
 
     <ImageView
         android:id="@+id/productImage"
@@ -15,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
+        android:layout_gravity="center_vertical"
         android:paddingLeft="8dp">
 
         <TextView
@@ -38,6 +41,6 @@
             android:layout_height="wrap_content"
             android:text="Product Price"
             android:textSize="16sp"
-            android:textColor="@android:color/holo_green_dark" />
+            android:textColor="#DF1111"/>
     </LinearLayout>
 </LinearLayout>

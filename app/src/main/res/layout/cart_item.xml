@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:background="@drawable/test"
+    android:layout_marginBottom="8dp"
+    >
 
     <!-- Hình ảnh sản phẩm -->
     <ImageView
@@ -23,11 +26,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Tên sản phẩm"
-        android:textSize="16sp"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/cartProductImageView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/deleteButton"
         app:layout_constraintBottom_toTopOf="@+id/cartProductPriceTextView"
         android:layout_marginBottom="8dp"
         android:ellipsize="end"
@@ -39,11 +41,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Giá sản phẩm"
-        android:textSize="14sp"
-        android:textColor="#757575"
+        android:textSize="15sp"
+        android:textColor="#DF1111"
         app:layout_constraintStart_toEndOf="@id/cartProductImageView"
         app:layout_constraintTop_toBottomOf="@id/cartProductNameTextView"
-        app:layout_constraintEnd_toStartOf="@id/deleteButton"/>
+        />
 
     <!-- Điều khiển số lượng -->
     <LinearLayout
@@ -51,57 +53,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="130dp"
-        android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cartProductPriceTextView"
         app:layout_constraintStart_toEndOf="@id/cartProductImageView"
-        app:layout_constraintTop_toBottomOf="@id/cartProductPriceTextView">
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp">
 
         <!-- Nút giảm số lượng -->
-        <Button
+        <ImageView
             android:id="@+id/decreaseQuantityButtonCart"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:elevation="6dp"
-            android:text="−"
-            android:textColor="#F4F1F1"
-            android:textSize="20sp" />
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_minus"
+            android:contentDescription="Giảm số lượng"
+            android:elevation="6dp" />
 
         <!-- Hiển thị số lượng -->
         <TextView
             android:id="@+id/quantityTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="1"
+            android:textSize="20sp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:gravity="center"
-            android:text="1"
             android:textColor="#0B0A0A"
-            android:textSize="20sp" />
+            android:gravity="center"/>
 
         <!-- Nút tăng số lượng -->
-        <Button
+        <ImageView
             android:id="@+id/increaseQuantityButtonCart"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:elevation="6dp"
-            android:text="+"
-            android:textColor="#E8E3E3"
-            android:textSize="20sp" />
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_plus"
+            android:contentDescription="Tăng số lượng"
+            android:elevation="6dp" />
     </LinearLayout>
-
-    <!-- Nút xóa sản phẩm -->
-    <ImageButton
-        android:id="@+id/deleteButton"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:background="?attr/selectableItemBackground"
-        android:contentDescription="Xóa sản phẩm"
-        android:elevation="6dp"
-        android:src="@android:drawable/ic_delete"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.061" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
