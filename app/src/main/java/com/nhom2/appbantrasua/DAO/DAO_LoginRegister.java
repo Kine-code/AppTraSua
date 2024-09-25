@@ -3,6 +3,7 @@ package com.nhom2.appbantrasua.DAO;
 import android.content.Context;
 
 import com.nhom2.appbantrasua.DAL.DAL_LoginRegister;
+import com.nhom2.appbantrasua.Entity.LoginRegister;
 
 import java.io.Serializable;
 
@@ -17,7 +18,11 @@ public class DAO_LoginRegister implements Serializable {
         dal.InsertAccount(username, password, name, otp, quyen);
     }
 
-    public boolean checkAccount(String userName, String password){
+    public LoginRegister checkAccount(String userName, String password){
         return dal.checkAccount(userName, password);
+    }
+
+    public void ChangePasswordAccount(String userName, String newPassword){
+        dal.ChangePasswordAccount(userName, newPassword);
     }
 }

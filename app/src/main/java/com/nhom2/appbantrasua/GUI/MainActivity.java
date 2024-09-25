@@ -24,6 +24,7 @@ import com.nhom2.appbantrasua.ImageSliderAdapter;
 import com.nhom2.appbantrasua.DAL.ProductAdapter;
 import com.nhom2.appbantrasua.R;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,13 +34,9 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private ViewPager viewPager;
     private ImageSliderAdapter imageSliderAdapter;
-
 // region DAO
     DAO_Product daoProduct = new DAO_Product();
-
-
 // endregion
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(imageSliderAdapter);
 
         daoProduct.InitLogin(this);
-
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -71,13 +67,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
-        bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onNavigationItemReselected(@NonNull MenuItem item) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.nav_cart) {
                     Intent intent = new Intent(MainActivity.this, CartActivity.class);
-                    Toast.makeText(MainActivity.this, "Giỏ hàng được chọn", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "Giỏ hàng được chọn", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
                 } else if (id == R.id.nav_home) {
                     // Xử lý mục Đồ uống
@@ -86,13 +82,15 @@ public class MainActivity extends AppCompatActivity {
                     // Xử lý mục Liên hệ
                     Toast.makeText(MainActivity.this, "Liên hệ được chọn", Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.nav_account) {
-                    // Xử lý mục Lịch sử
+                    // Xử lý mục Tài khoản
+                    Intent intent = new Intent(MainActivity.this, AccountActivity.class);
                     Toast.makeText(MainActivity.this, "Tài khoản được chọn", Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
                 }
-                return ;
+                return true;
             }
-
         });
+
     }
     }
 

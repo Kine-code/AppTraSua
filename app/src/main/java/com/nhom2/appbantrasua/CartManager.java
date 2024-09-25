@@ -24,7 +24,6 @@ public class CartManager {
     }
 
 
-
     public void addToCart(Product product) {
         cart.add(product);
     }

@@ -18,8 +18,6 @@ public class DAO_Product implements Serializable {
     }
 
     public List<Product> ShowListProduct(){
-
-
         Log.e("PRODUCTddddddd", String.valueOf(dal.ShowListProduct().size()));
         return dal.ShowListProduct();
     }

@@ -76,7 +76,6 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Mật khẩu không trùng khớp", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 sendEmail(_email);
             }
         });
@@ -88,9 +87,9 @@ public class RegisterActivity extends AppCompatActivity {
                 String inputOTP = otpInput.getText().toString();
                 if (inputOTP.equals(generatedOTP)) {
                     Toast.makeText(RegisterActivity.this, "Xác thực thành công!", Toast.LENGTH_SHORT).show();
-
+                    txtUserName.setText("");
+                    password.setText("");
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-
                     daoLoginRegister.InsertAccount(_username, _pass, _fullName, _email, "0");
                     startActivity(intent);
 
@@ -105,6 +104,15 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sendEmail(_email);
+            }
+        });
+
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
     }

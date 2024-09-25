@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.nhom2.appbantrasua.DAO.DAO_LoginRegister;
+import com.nhom2.appbantrasua.Entity.LoginRegister;
 import com.nhom2.appbantrasua.R;
 
 import java.util.concurrent.ExecutorService;
@@ -26,7 +27,8 @@ public class LoginActivity extends AppCompatActivity
     EditText userNameAccount, passwordAccout;
     private ExecutorService executorService;
     DAO_LoginRegister daoRegister = new DAO_LoginRegister();
-
+    AccountActivity accountActivity;
+    public LoginRegister account;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,11 +64,12 @@ public class LoginActivity extends AppCompatActivity
             Toast.makeText(this, "Không được để trống", Toast.LENGTH_SHORT).show();
         }
         try{
-            if(daoRegister.checkAccount(userName, password)){
-                goToMainActivity();
+            if(daoRegister.checkAccount(userName, password) != null){
+                account = daoRegister.checkAccount(userName, password);
+                AccountActivity.getInstance().account = this.account;
+                        goToMainActivity();
             }else{
                 Toast.makeText(this, "Sai tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();
-
             }
         }catch (Exception e){
 

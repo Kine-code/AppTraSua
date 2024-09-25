@@ -8,7 +8,7 @@ public class Product implements Serializable {
     private String description;
     private double price;
     private String imageResource;
-
+    private Topping Topping;
     private int Quality;
 
     public Product(int id, String name, String description, double price, String imageResource) {
@@ -21,6 +21,14 @@ public class Product implements Serializable {
 
     public int getQuality() {
         return Quality;
+    }
+
+    public Product.Topping getTopping() {
+        return Topping;
+    }
+
+    public void setTopping(Product.Topping topping) {
+        Topping = topping;
     }
 
     public void setQuality(int quality) {
@@ -66,4 +74,20 @@ public class Product implements Serializable {
     public void setImageResource(String imageResource) {
         this.imageResource = imageResource;
     }
+
+    public class Topping {
+        public int da;
+        public int Duong;
+        public int size;
+        public int toping;
+
+        public Topping(int da, int duong, int size, int toping) {
+            this.da = da;
+            Duong = duong;
+            this.size = size;
+            this.toping = toping;
+        }
+    }
 }
+
+

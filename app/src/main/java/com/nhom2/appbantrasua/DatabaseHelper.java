@@ -1,5 +1,6 @@
 package com.nhom2.appbantrasua;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,15 +17,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private final Context context;
     public static final String DATABASE_NAME = "AppTraSua.db";
     public static final int DATABASE_vERSION = 1;
-
     private static String DB_PATH = "";
+    public static SQLiteDatabase db;
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_vERSION);
         this.context = context;
         DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
         createDatabase();
-
+        db = getWritableDatabase();
         try {
             QueryData("CREATE TABLE \"Account\" ( \"username\" TEXT NOT NULL, \"password\" TEXT, \"name\" TEXT, \"otp\" TEXT UNIQUE, \"quyen\" TEXT, PRIMARY KEY(\"username\") )");
             QueryData("CREATE TABLE \"Product\" ( \"id\" INTEGER NOT NULL, \"nameproduct\" TEXT, \"description\" TEXT, \"price\" REAL, \"imgprd\" TEXT, PRIMARY KEY(\"id\") )");
@@ -68,9 +70,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
-
-
     //tao ham thuc hien cau lenh truy van
     public void QueryData(String query) {
         SQLiteDatabase database = getWritableDatabase();
@@ -85,9 +84,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 //region Account
     public void INSERT_ACCOUNT(String username, String password, String name, String otp, String quyen) {
-        SQLiteDatabase database = getWritableDatabase();
         String query = "INSERT INTO Account VALUES(?,?,?,?,?)";
-        SQLiteStatement stm = database.compileStatement(query);
+        SQLiteStatement stm = db.compileStatement(query);
         //clear du lieu cu neu co
 //        stm.clearBindings();
         stm.bindString(1,username);
@@ -97,6 +95,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         stm.bindString(5,quyen);
         stm.executeInsert();
     }
+
+
+
 
 
 //endregion

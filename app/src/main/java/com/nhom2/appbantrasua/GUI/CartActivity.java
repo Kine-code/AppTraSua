@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -68,9 +69,13 @@ public class CartActivity extends AppCompatActivity {
 
         payButton.setOnClickListener(v -> {
             // Handle payment process
-            Intent intent = new Intent(CartActivity.this, PaymentActivity.class);
-            intent.putExtra("totalPrice", totalPrice);
-            startActivity(intent);
+
+            if(totalPrice > 0){
+                Intent intent = new Intent(CartActivity.this, PaymentActivity.class);
+                intent.putExtra("totalPrice", totalPrice);
+                startActivity(intent);
+            }else
+                Toast.makeText(this, "vui lòng chọn đồ uống mới được thanh toán", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -78,7 +83,11 @@ public class CartActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+                // Trở về trang chủ (MainActivity)
+                Intent intent = new Intent(CartActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
