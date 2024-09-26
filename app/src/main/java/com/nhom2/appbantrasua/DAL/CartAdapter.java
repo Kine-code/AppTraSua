@@ -163,6 +163,24 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         }
     }
 
+    public void clearCartItems(String username, Context context) {
+        String filename = "cartItems_" + username + ".json";
+
+        File file = new File(context.getFilesDir(), filename);
+        if (file.exists()) {
+            if (file.delete()) {
+                // File deleted successfully
+                Log.d("Cart", "Cart items file deleted successfully.");
+            } else {
+                // Failed to delete file
+                Log.e("Cart", "Failed to delete cart items file.");
+            }
+        } else {
+            // File does not exist
+            Log.d("Cart", "Cart items file does not exist.");
+        }
+    }
+
 
     @Override
     public int getItemCount() {
