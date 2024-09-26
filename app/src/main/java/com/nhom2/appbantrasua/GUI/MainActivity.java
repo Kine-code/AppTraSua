@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (id == R.id.nav_home) {
                     // Xử lý mục Đồ uống
                     Toast.makeText(MainActivity.this, "Trở về trang chủ", Toast.LENGTH_SHORT).show();
-                }else if(id == R.id.nav_feedbac){
+                }else if(id == R.id.nav_history){
 
                     Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
                     Toast.makeText(MainActivity.this, "Lịch sử đã được chọn", Toast.LENGTH_SHORT).show();

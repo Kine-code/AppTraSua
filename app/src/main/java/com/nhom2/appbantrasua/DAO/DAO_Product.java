@@ -18,7 +18,16 @@ public class DAO_Product implements Serializable {
     }
 
     public List<Product> ShowListProduct(){
-        Log.e("PRODUCTddddddd", String.valueOf(dal.ShowListProduct().size()));
+//        Log.e("PRODUCTddddddd", String.valueOf(dal.ShowListProduct().size()));
         return dal.ShowListProduct();
+    }
+    public void Insert_Product(String id, String nameproduct, String description, String price, String imgprd){
+        dal.InsertProduct(id,nameproduct,description,price,imgprd);
+    }
+    public boolean DeLeTeProduct(String id){
+        return dal.deleteProduct(id);
+    }
+    public void UpdateProductByID(String id, String name, String moTa, String giaCa, String img){
+        dal.UpdateProduct(id, name,moTa,giaCa,img);
     }
 }

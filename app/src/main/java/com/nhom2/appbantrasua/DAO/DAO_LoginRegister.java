@@ -22,6 +22,10 @@ public class DAO_LoginRegister implements Serializable {
         return dal.checkAccount(userName, password);
     }
 
+    public int checkAdmin(String userName){
+        return dal.checkAdmin(userName);
+    }
+
     public void ChangePasswordAccount(String userName, String newPassword){
         dal.ChangePasswordAccount(userName, newPassword);
     }
