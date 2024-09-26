@@ -25,7 +25,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private ImageView productImageView;
     private TextView productNameTextView, productDescriptionTextView, productPriceTextView, quantityTextView;
     private Button addToCartButton,increaseQuatityButtonProduct,
-            decreaseQuatityButtonProduct,buttontoppingitem, buttonConfirmTopping;
+            decreaseQuatityButtonProduct, buttonConfirmTopping;
     int quatity = 1;
     CartAdapter cartAdapter = new CartAdapter();
     @Override
@@ -52,13 +52,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
 
 // ButtonQuatityProduct
-
-            buttontoppingitem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //DialogLogin();
-                }
-            });
 
 
             increaseQuatityButtonProduct.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +122,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         quantityTextView = findViewById(R.id.quantityTextView);
         increaseQuatityButtonProduct = findViewById(R.id.increaseQuantityButtonProduct);
         decreaseQuatityButtonProduct = findViewById(R.id.decreaseQuantityButton);
-        buttontoppingitem = findViewById(R.id.buttontoppingitem);
     }
 
     @Override

@@ -1,0 +1,81 @@
+package com.nhom2.appbantrasua.DAL;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.nhom2.appbantrasua.Entity.History;
+import com.nhom2.appbantrasua.Entity.Product;
+import com.nhom2.appbantrasua.R;
+
+import java.util.List;
+
+public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
+    private Context context;
+    private List<History> listHistory;
+    String nameProducts = "";
+    public HistoryAdapter() {
+    }
+
+    public HistoryAdapter (Context context, List<History> historyItems){
+        this.context = context;
+        listHistory = historyItems;
+    }
+
+    @NonNull
+    @Override
+    public HistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_history, parent, false);
+        return new HistoryViewHolder(view);
+    }
+
+
+    @Override
+    public void onBindViewHolder(@NonNull HistoryAdapter.HistoryViewHolder holder, int position) {
+        History history = listHistory.get(position);
+        if (history == null){
+            return;
+        }
+        holder.textnamehistory.setText(history.getName());
+        holder.textphonehistory.setText(history.getPhone());
+        holder.textaddresshistory.setText(history.getAddress());
+
+        for (int i = 0; i < history.getListProduct().size(); i++){
+            nameProducts += history.getListProduct().get(i).getName() + " ";
+        }
+
+        holder.text_order_items.setText(nameProducts);
+
+        holder.text_total_amount.setText(history.getTotalAmount());
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return listHistory.size();
+    }
+
+    public static class HistoryViewHolder extends RecyclerView.ViewHolder {
+
+        TextView textnamehistory;
+        TextView textphonehistory;
+        TextView textaddresshistory;
+        TextView text_order_items;
+        TextView text_total_amount;
+
+        public HistoryViewHolder(@NonNull View itemView) {
+            super(itemView);
+            this.textnamehistory = itemView.findViewById(R.id.textnamehistory);
+            this.textphonehistory = itemView.findViewById(R.id.textphonehistory);
+            this.textaddresshistory = itemView.findViewById(R.id.textaddresshistory);
+            this.text_order_items = itemView.findViewById(R.id.text_order_items);
+            this.text_total_amount = itemView.findViewById(R.id.text_total_amount);
+        }
+    }
+}

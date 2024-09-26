@@ -30,6 +30,7 @@
         <activity android:name=".GUI.MainActivity"/>
         <activity android:name=".GUI.AccountActivity"/>
         <activity android:name=".GUI.PaymentActivity"/>
+        <activity android:name=".GUI.HistoryActivity"/>
 
     </application>
 

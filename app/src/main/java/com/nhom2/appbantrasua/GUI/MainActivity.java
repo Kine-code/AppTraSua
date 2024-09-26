@@ -78,8 +78,15 @@ public class MainActivity extends AppCompatActivity {
                 } else if (id == R.id.nav_home) {
                     // Xử lý mục Đồ uống
                     Toast.makeText(MainActivity.this, "Trở về trang chủ", Toast.LENGTH_SHORT).show();
-                } else if (id == R.id.nav_contact) {
-                    // Xử lý mục Liên hệ
+                }else if(id == R.id.nav_feedbac){
+
+                    Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+                    Toast.makeText(MainActivity.this, "Lịch sử đã được chọn", Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+                }
+                else if (id == R.id.nav_contact) {
+
+
                     Toast.makeText(MainActivity.this, "Liên hệ được chọn", Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.nav_account) {
                     // Xử lý mục Tài khoản

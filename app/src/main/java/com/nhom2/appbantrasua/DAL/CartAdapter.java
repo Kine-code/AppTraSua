@@ -65,7 +65,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.productPriceTextView.setText(formattedPrice + " VND");
         holder.productQualityTextView.setText(String.valueOf(product.getQuality()));
 
-
 //Start Button increase and decrase Cart
         holder.increaseQuantityButtonCart.setOnClickListener(new View.OnClickListener() {
             @Override

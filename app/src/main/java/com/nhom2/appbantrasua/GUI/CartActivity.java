@@ -45,6 +45,7 @@ public class CartActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
         cartRecyclerView = findViewById(R.id.cartRecyclerView);
         TotalAmount();
         List<Product> cartItems = CartManager.getInstance().getCartItems(this);
