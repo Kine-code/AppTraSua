@@ -19,7 +19,7 @@
         android:text="Payment"
         android:textSize="36sp" />
     <!-- Full Name -->
-    <EditText
+    <TextView
         android:id="@+id/edittextfullnamepayment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,6 +28,18 @@
         android:layout_marginRight="30dp"
         android:background="@drawable/edittextlogin"
         android:hint="Full Name"
+        android:padding="16dp"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textpricepayment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/edittextlogin"
+        android:hint="Giá tiền"
         android:padding="16dp"
         android:textSize="18sp" />
 
@@ -54,17 +66,7 @@
             android:padding="16dp"
             android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/textpricepayment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:background="@drawable/edittextlogin"
-        android:hint="Giá tiền"
-        android:padding="16dp"
-        android:textSize="18sp" />
+
 
     <!-- Nút Đăng ký và Hủy -->
     <LinearLayout

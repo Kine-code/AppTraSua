@@ -12,22 +12,34 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.nhom2.appbantrasua.CartManager;
 import com.nhom2.appbantrasua.Entity.Product;
+import com.nhom2.appbantrasua.GUI.AccountActivity;
 import com.nhom2.appbantrasua.GUI.CartActivity;
 import com.nhom2.appbantrasua.R;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
     private Context context;
-    private List<Product> cartItems;
+    public static List<Product> cartItems;
     int quatity = 1;
 
     CartActivity _cartActivity;
+
+    public CartAdapter(){}
 
     public CartAdapter(Context context, List<Product> cartItems, CartActivity cartActivity) {
         this.context = context;
@@ -54,7 +66,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.productQualityTextView.setText(String.valueOf(product.getQuality()));
 
 
-
 //Start Button increase and decrase Cart
         holder.increaseQuantityButtonCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +73,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 quatity = Integer.parseInt(holder.productQualityTextView.getText().toString());
                 quatity++;
                 holder.productQualityTextView.setText(String.valueOf(quatity));
-                product.setQuality(quatity);
+                updateQualityProductItem(holder.getAdapterPosition(), AccountActivity.getInstance().account.getUserName(), context, quatity);
                 _cartActivity.TotalAmount();
             }
         });
@@ -72,21 +83,85 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             @Override
             public void onClick(View view) {
                 quatity = Integer.parseInt(holder.productQualityTextView.getText().toString());
-                if(quatity > 0)
+                if(quatity > 0){
                     quatity--;
+                    updateQualityProductItem(holder.getAdapterPosition(), AccountActivity.getInstance().account.getUserName(), context, quatity);
+                }
 
                 if(quatity == 0){
                     Toast.makeText(context, "Sản phẩm này đã được xóa", Toast.LENGTH_SHORT).show();
-                    cartItems.remove(holder.getAdapterPosition());
-                    _cartActivity.ReLoadRycyclerView(cartItems);
+                    removeProductFromCart(holder.getAdapterPosition(), AccountActivity.getInstance().account.getUserName(), context);
+                    _cartActivity.ReLoadRycyclerView(CartManager.getInstance().getCartItems(context));
                 }
                 holder.productQualityTextView.setText(String.valueOf(quatity));
-                product.setQuality(quatity);
                 _cartActivity.TotalAmount();
             }
         });
     }
 //End
+
+
+    public void updateQualityProductItem(int productId, String username, Context context,int quality){
+        List<Product> cartItems = loadCartItems(username, context);
+        cartItems.get(productId).setQuality(quality);
+        saveCartItems(cartItems, username, context);
+    }
+
+
+    public void removeProductFromCart(int productId, String username, Context context) {
+        // Bước 1: Tải danh sách sản phẩm hiện tại của tài khoản
+        List<Product> cartItems = loadCartItems(username, context);
+        if (cartItems != null) {
+            cartItems.remove(productId);
+            // Bước 3: Lưu lại danh sách đã cập nhật
+            saveCartItems(cartItems, username, context);
+        }
+    }
+
+    public void addProductToCart(Product newProduct, String username, Context context) {
+        // Bước 1: Tải danh sách sản phẩm hiện tại của tài khoản
+        List<Product> cartItems = loadCartItems(username, context);
+
+        // Bước 2: Nếu danh sách chưa tồn tại, khởi tạo danh sách mới
+        if (cartItems == null) {
+            cartItems = new ArrayList<>();
+        }
+        // Bước 3: Thêm sản phẩm mới vào danh sách
+        cartItems.add(newProduct);
+
+        // Bước 4: Lưu lại danh sách đã cập nhật
+        saveCartItems(cartItems, username, context);
+    }
+
+    public List<Product> loadCartItems(String username, Context context) {
+        List<Product> cartItems = null;
+        String filename = "cartItems_" + username + ".json";  // Đọc file theo tài khoản
+
+        try (FileInputStream fis = context.openFileInput(filename);
+             InputStreamReader isr = new InputStreamReader(fis);
+             BufferedReader br = new BufferedReader(isr)) {
+            Gson gson = new Gson();
+            Type productListType = new TypeToken<List<Product>>(){}.getType();
+            cartItems = gson.fromJson(br, productListType);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return cartItems;
+    }
+
+    public void saveCartItems(List<Product> cartItems, String username, Context context) {
+        Gson gson = new Gson();
+        String json = gson.toJson(cartItems);
+
+        String filename = "cartItems_" + username + ".json";
+
+        try (FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE)) {
+            fos.write(json.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public int getItemCount() {

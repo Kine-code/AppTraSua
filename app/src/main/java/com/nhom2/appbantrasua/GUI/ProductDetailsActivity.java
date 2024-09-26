@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nhom2.appbantrasua.CartManager;
+import com.nhom2.appbantrasua.DAL.CartAdapter;
 import com.nhom2.appbantrasua.Entity.Product;
 import com.nhom2.appbantrasua.R;
 
@@ -26,7 +27,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private Button addToCartButton,increaseQuatityButtonProduct,
             decreaseQuatityButtonProduct,buttontoppingitem, buttonConfirmTopping;
     int quatity = 1;
-
+    CartAdapter cartAdapter = new CartAdapter();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +88,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             addToCartButton.setOnClickListener(v -> {
                 product.setQuality(quatity);
                 if(quatity != 0){
-                    CartManager.getInstance().addToCart(product);
+                    CartManager.getInstance().LoadAndSaveData(product, getBaseContext());
                     Toast.makeText(this, product.getName() + " đã được thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
                     // mở CartActivity khi ấn thêm sản phẩm
 //                Intent cartIntent = new Intent(ProductDetailsActivity.this, CartActivity.class);
@@ -99,6 +100,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             });
         }
     }
+
 
 
     private void DialogLogin(){

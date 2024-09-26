@@ -9,6 +9,7 @@ import com.nhom2.appbantrasua.Entity.LoginRegister;
 
 import java.io.Serializable;
 
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 public class DAL_LoginRegister implements Serializable {
@@ -22,8 +23,18 @@ public class DAL_LoginRegister implements Serializable {
         this.context = context;
     }
 
+    //region Account
     public void InsertAccount(String username, String password, String name, String otp, String quyen) {
-        databaseHelper.INSERT_ACCOUNT(username, password, name, otp, quyen);
+        String query = "INSERT INTO Account VALUES(?,?,?,?,?)";
+        SQLiteStatement stm = databaseHelper.openDB().compileStatement(query);
+        //clear du lieu cu neu co
+//        stm.clearBindings();
+        stm.bindString(1,username);
+        stm.bindString(2,password);
+        stm.bindString(3,name);
+        stm.bindString(4,otp);
+        stm.bindString(5,quyen);
+        stm.executeInsert();
     }
 
     public LoginRegister checkAccount(String userName, String password) {
@@ -47,7 +58,7 @@ public class DAL_LoginRegister implements Serializable {
     public boolean ChangePasswordAccount(String userName, String newPassword){
         contentValues = new ContentValues();
         contentValues.put("password", newPassword);
-        int check = databaseHelper.db.update("Account", contentValues, "userName = ?", new String[] {userName});
+        int check = databaseHelper.openDB().update("Account", contentValues, "userName = ?", new String[] {userName});
         if(check == 0){
             return false;
         }else
@@ -55,4 +66,6 @@ public class DAL_LoginRegister implements Serializable {
             return true;
         }
     }
+
+
 }

@@ -29,6 +29,7 @@
         <activity android:name=".GUI.CartActivity" />
         <activity android:name=".GUI.MainActivity"/>
         <activity android:name=".GUI.AccountActivity"/>
+        <activity android:name=".GUI.PaymentActivity"/>
 
     </application>
 

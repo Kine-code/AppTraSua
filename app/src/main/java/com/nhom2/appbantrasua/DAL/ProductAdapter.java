@@ -75,4 +75,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             productImage = itemView.findViewById(R.id.productImage);
         }
     }
+
+
+
 }

@@ -59,7 +59,6 @@ public class LoginActivity extends AppCompatActivity
     }
 
     private void CheckAccount(String userName, String password){
-
         if(userName.isEmpty() || password.isEmpty()){
             Toast.makeText(this, "Không được để trống", Toast.LENGTH_SHORT).show();
         }

@@ -1,9 +1,11 @@
 package com.nhom2.appbantrasua.GUI;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nhom2.appbantrasua.DAL.CartAdapter;
 import com.nhom2.appbantrasua.CartManager;
 import com.nhom2.appbantrasua.Entity.Product;
-import com.nhom2.appbantrasua.PaymentActivity;
 import com.nhom2.appbantrasua.R;
 
 import java.text.NumberFormat;
@@ -28,12 +29,15 @@ public class CartActivity extends AppCompatActivity {
     private TextView totalPriceTextView;
     private CartAdapter cartAdapter;
     private Button payButton;
+    LinearLayout payment, cartLayout;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-
+        payment = findViewById(R.id.payment);
+        cartLayout = findViewById(R.id.layoutCart);
         // Set up Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -41,10 +45,9 @@ public class CartActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
         cartRecyclerView = findViewById(R.id.cartRecyclerView);
         TotalAmount();
-        List<Product> cartItems = CartManager.getInstance().getCartItems();
+        List<Product> cartItems = CartManager.getInstance().getCartItems(this);
         ReLoadRycyclerView(cartItems);
     }
 
@@ -58,7 +61,7 @@ public class CartActivity extends AppCompatActivity {
     public void TotalAmount(){
         totalPriceTextView = findViewById(R.id.totalPriceTextView);
         payButton = findViewById(R.id.payButton);
-        List<Product> cartItems = CartManager.getInstance().getCartItems();
+        List<Product> cartItems = CartManager.getInstance().getCartItems(this);
         // Giả sử getPrice() trả về giá sản phẩm
         double totalPrice = cartItems.stream().mapToDouble(item -> item.getPrice() * item.getQuality()).sum();
 
@@ -72,7 +75,7 @@ public class CartActivity extends AppCompatActivity {
 
             if(totalPrice > 0){
                 Intent intent = new Intent(CartActivity.this, PaymentActivity.class);
-                intent.putExtra("totalPrice", totalPrice);
+                intent.putExtra("totalPrice", formattedPrice);
                 startActivity(intent);
             }else
                 Toast.makeText(this, "vui lòng chọn đồ uống mới được thanh toán", Toast.LENGTH_SHORT).show();

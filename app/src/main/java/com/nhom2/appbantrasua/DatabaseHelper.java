@@ -1,17 +1,18 @@
 package com.nhom2.appbantrasua;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import android.database.sqlite.SQLiteStatement;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private final Context context;
@@ -26,20 +27,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         this.context = context;
         DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
         createDatabase();
-        db = getWritableDatabase();
-        try {
-            QueryData("CREATE TABLE \"Account\" ( \"username\" TEXT NOT NULL, \"password\" TEXT, \"name\" TEXT, \"otp\" TEXT UNIQUE, \"quyen\" TEXT, PRIMARY KEY(\"username\") )");
-            QueryData("CREATE TABLE \"Product\" ( \"id\" INTEGER NOT NULL, \"nameproduct\" TEXT, \"description\" TEXT, \"price\" REAL, \"imgprd\" TEXT, PRIMARY KEY(\"id\") )");
-        } catch (Exception e) {
-            Log.e("Error", "database da ton tai");
-        }
     }
 
 
     private void createDatabase(){
         if(!checkDatabase()){
-
-            // this.getReadableDatabase();
+            this.getReadableDatabase();
             try{
                 copyDatabase();
                 Log.d("Database_Helper", "Database copied");
@@ -69,6 +62,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         inputStream.close();
     }
 
+    public SQLiteDatabase openDB(){
+        String dbPath = DB_PATH + DATABASE_NAME;
+        if(db == null || !db.isOpen()){
+            db = SQLiteDatabase.openDatabase(dbPath, null, SQLiteDatabase.OPEN_READWRITE);
+        }
+        return db;
+    }
+
 
     //tao ham thuc hien cau lenh truy van
     public void QueryData(String query) {
@@ -81,24 +82,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = getReadableDatabase();
         return database.rawQuery(query, null);
     }
-
-//region Account
-    public void INSERT_ACCOUNT(String username, String password, String name, String otp, String quyen) {
-        String query = "INSERT INTO Account VALUES(?,?,?,?,?)";
-        SQLiteStatement stm = db.compileStatement(query);
-        //clear du lieu cu neu co
-//        stm.clearBindings();
-        stm.bindString(1,username);
-        stm.bindString(2,password);
-        stm.bindString(3,name);
-        stm.bindString(4,otp);
-        stm.bindString(5,quyen);
-        stm.executeInsert();
-    }
-
-
-
-
 
 //endregion
 

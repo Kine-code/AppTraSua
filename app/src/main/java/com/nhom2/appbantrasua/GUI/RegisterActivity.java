@@ -63,8 +63,6 @@ public class RegisterActivity extends AppCompatActivity {
                 _pass = password.getText().toString().trim();
                 _email = email.getText().toString().trim();
                 _fullName = fullName.getText().toString().trim();
-
-
                 // Validate fields first
 
                 if (_username.isEmpty() || _pass.isEmpty() || _email.isEmpty() || _fullName.isEmpty()) {
@@ -119,12 +117,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void sendEmail(String _email) {
         // Sử dụng ExecutorService để thực hiện việc gửi email trên background thread
+        executorService = Executors.newSingleThreadExecutor();
         executorService.execute(() -> {
             try {
                 GmailSender sender = new GmailSender("nhompro88@gmail.com", "picz syny ykix mkmh");
                 generatedOTP = generateVerificationCode();
                 sender.sendMail(_email, "Mã xác thực", "Mã xác thực của bạn là: " + generatedOTP);
-
                 // Show success message and switch to OTP layout
                 runOnUiThread(() -> {
                     Toast.makeText(RegisterActivity.this, "Đã gửi mã xác thực đến email!", Toast.LENGTH_SHORT).show();

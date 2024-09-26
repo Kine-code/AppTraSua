@@ -26,7 +26,6 @@ public class AccountActivity  extends AppCompatActivity {
     private static AccountActivity instance;
     public static LoginRegister account = null;
 
-
     EditText userName, password, gmail, fullName, newPassword;
     Button btnBackHome, btnLogout, btnChangePassword, btnBackAccount, btnConfirmPassword;
     LinearLayout infoAccount, changePasswordAccount;
@@ -75,6 +74,8 @@ public class AccountActivity  extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+                account = null;
+                CartManager.getInstance().ClearList();
                 Intent intent = new Intent(AccountActivity.this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
