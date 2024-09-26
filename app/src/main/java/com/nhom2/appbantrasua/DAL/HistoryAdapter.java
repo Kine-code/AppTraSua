@@ -42,17 +42,17 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         if (history == null){
             return;
         }
-        holder.textnamehistory.setText(history.getName());
-        holder.textphonehistory.setText(history.getPhone());
-        holder.textaddresshistory.setText(history.getAddress());
+        holder.textnamehistory.setText("Họ tên: " + history.getName());
+        holder.textphonehistory.setText("Số điện thoại: " + history.getPhone());
+        holder.textaddresshistory.setText("Địa chỉ nhận: " + history.getAddress());
 
         for (int i = 0; i < history.getListProduct().size(); i++){
-            nameProducts += history.getListProduct().get(i).getName() + " ";
+            nameProducts += "        - " + history.getListProduct().get(i).getName() + "\n";
         }
 
-        holder.text_order_items.setText(nameProducts);
+        holder.text_order_items.setText("Đồ uống: " + "\n" + nameProducts);
 
-        holder.text_total_amount.setText(history.getTotalAmount());
+        holder.text_total_amount.setText("Tổng tiền: " + history.getTotalAmount());
 
     }
 

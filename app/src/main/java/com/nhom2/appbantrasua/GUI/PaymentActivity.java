@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.nhom2.appbantrasua.CartManager;
 import com.nhom2.appbantrasua.DAL.CartAdapter;
 import com.nhom2.appbantrasua.Entity.History;
 import com.nhom2.appbantrasua.Entity.Product;
@@ -17,6 +18,7 @@ import com.nhom2.appbantrasua.HistoryManager;
 import com.nhom2.appbantrasua.R;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,10 +44,8 @@ public class PaymentActivity extends AppCompatActivity {
                     Toast.makeText(PaymentActivity.this, "Phải điền đủ thông tin", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(PaymentActivity.this, "Thanh toán thành công", Toast.LENGTH_SHORT).show();
-
-
                     CartAdapter cart = new CartAdapter();
-                    List<Product> list = cart.cartItems;
+                    List<Product> list = new ArrayList<>(cart.cartItems);
                     List<History> historyList = HistoryManager.getInstance().getListHistory();
                     History history = new History();
                     history.setListProduct(list);
@@ -55,8 +55,8 @@ public class PaymentActivity extends AppCompatActivity {
                     history.setTotalAmount(_price);
                     historyList.add(history);
                     HistoryManager.getInstance().setListHistory(historyList);
-
-                    cart.cartItems.clear();
+                    cart.clearCartItems(AccountActivity.getInstance().account.getUserName(), getBaseContext());
+                    CartManager.getInstance().ClearList();
                     Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
                     startActivity(intent);
                 }

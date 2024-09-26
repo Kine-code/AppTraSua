@@ -1,6 +1,7 @@
 package com.nhom2.appbantrasua.DAL;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.nhom2.appbantrasua.GUI.CartActivity;
 import com.nhom2.appbantrasua.R;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
