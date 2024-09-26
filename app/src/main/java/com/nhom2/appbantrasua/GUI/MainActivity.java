@@ -36,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
 // region DAO
     DAO_Product daoProduct = new DAO_Product();
-
-
 // endregion
 
 
@@ -65,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
         List<Product> products = daoProduct.ShowListProduct();
-////        // data tĩnh
         ProductAdapter adapter = new ProductAdapter(products);
         recyclerView.setAdapter(adapter);
 

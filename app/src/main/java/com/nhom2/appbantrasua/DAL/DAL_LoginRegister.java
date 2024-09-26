@@ -45,5 +45,14 @@ public class DAL_LoginRegister implements Serializable {
         }
         return false;
     }
+    public int checkAdmin(String userName){
+        int quyen = 0;
+        Cursor cursor = database.GetData("SELECT quyen FROM Account WHERE username = '" + userName + "'");
+        if (cursor.moveToFirst()) {
+            quyen = cursor.getInt(0);
+        }
+        cursor.close();
+        return (quyen == 1) ? 1 : 0;
+    }
 
 }

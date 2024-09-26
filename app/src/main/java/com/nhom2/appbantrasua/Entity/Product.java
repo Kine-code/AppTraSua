@@ -16,7 +16,6 @@ public class Product implements Serializable {
         this.price = price;
         this.imageResource = imageResource;
     }
-
     public int getId() {
         return id;
     }

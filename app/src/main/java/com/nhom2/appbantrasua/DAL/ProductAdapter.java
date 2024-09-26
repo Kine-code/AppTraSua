@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nhom2.appbantrasua.DAO.DAO_LoginRegister;
+import com.nhom2.appbantrasua.DAO.DAO_Product;
 import com.nhom2.appbantrasua.Entity.Product;
 import com.nhom2.appbantrasua.GUI.ProductDetailsActivity;
 import com.nhom2.appbantrasua.R;
@@ -25,6 +27,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     Context context;
     public ProductAdapter(List<Product> productList) {
         this.productList = productList;
+//        this.context = context;
     }
 
     @NonNull
@@ -32,7 +35,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_product, parent, false);
-        context = parent.getContext();
+            context = parent.getContext();
         return new ProductViewHolder(view);
     }
 

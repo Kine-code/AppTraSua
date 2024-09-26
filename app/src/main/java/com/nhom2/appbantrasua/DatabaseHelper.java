@@ -74,9 +74,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
-
-
     //tao ham thuc hien cau lenh truy van
     public void QueryData(String query) {
         SQLiteDatabase database = getWritableDatabase();
@@ -123,4 +120,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
+
 }

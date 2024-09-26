@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 CheckAccount(userNameAccount.getText().toString().trim(), passwordAccout.getText().toString().trim());
+
             }
         });
     }
@@ -63,7 +64,13 @@ public class LoginActivity extends AppCompatActivity
         }
         try{
             if(daoRegister.checkAccount(userName, password)){
-                goToMainActivity();
+                if (daoRegister.checkAdmin(userName) == 1) {
+                    homeAdmin();
+                    finish();
+                } else {
+                    goToMainActivity();
+                    finish();
+                }
             }else{
                 Toast.makeText(this, "Sai tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();
 
@@ -71,8 +78,11 @@ public class LoginActivity extends AppCompatActivity
         }catch (Exception e){
 
         }
+    }
 
-
+    private void homeAdmin(){
+        Intent intent = new Intent(this,Home_admin.class);
+        startActivity(intent);
     }
 
      private void goToMainActivity (){

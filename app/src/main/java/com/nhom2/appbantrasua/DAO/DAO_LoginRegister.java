@@ -20,4 +20,7 @@ public class DAO_LoginRegister implements Serializable {
     public boolean checkAccount(String userName, String password){
         return dal.checkAccount(userName, password);
     }
+    public int checkAdmin(String userName){
+        return dal.checkAdmin(userName);
+    }
 }
