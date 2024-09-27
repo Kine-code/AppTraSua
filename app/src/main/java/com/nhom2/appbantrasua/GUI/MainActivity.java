@@ -2,11 +2,8 @@ package com.nhom2.appbantrasua.GUI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,16 +13,12 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nhom2.appbantrasua.DAO.DAO_Product;
 import com.nhom2.appbantrasua.Entity.Product;
 import com.nhom2.appbantrasua.ImageSliderAdapter;
 import com.nhom2.appbantrasua.DAL.ProductAdapter;
 import com.nhom2.appbantrasua.R;
-
-import java.security.PublicKey;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -62,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<Product> products = daoProduct.ShowListProduct();
-////        // data tĩnh
+
         ProductAdapter adapter = new ProductAdapter(products);
         recyclerView.setAdapter(adapter);
 

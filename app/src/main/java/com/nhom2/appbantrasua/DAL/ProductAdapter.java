@@ -2,6 +2,9 @@ package com.nhom2.appbantrasua.DAL;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,8 +50,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.productName.setText(product.getName());
         holder.productDescription.setText(product.getDescription());
         holder.productPrice.setText(formattedPrice + " VND");
-        int imageResId = context.getResources().getIdentifier(product.getImageResource(), "drawable", context.getPackageName());
-        holder.productImage.setImageResource(imageResId);
+
+        if (isBase64(product.getImageResource())){
+            byte[] decodedBytes = Base64.decode(product.getImageResource(), Base64.DEFAULT);
+            Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+            holder.productImage.setImageBitmap(decodedBitmap);
+        }else {
+            int imageResId = context.getResources().getIdentifier(product.getImageResource(), "drawable", context.getPackageName());
+            holder.productImage.setImageResource(imageResId);
+        }
 
         // Xử lý khi người dùng nhấn vào sản phẩm
         holder.itemView.setOnClickListener(v -> {
@@ -56,6 +66,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             intent.putExtra("product", product);
             v.getContext().startActivity(intent);
         });
+    }
+
+    public boolean isBase64(String s) {
+        try {
+            // Sử dụng Base64 của Android để giải mã chuỗi
+            Base64.decode(s, Base64.DEFAULT);
+            return true;
+        } catch (IllegalArgumentException e) {
+            // Bắt lỗi nếu chuỗi không phải Base64 hợp lệ
+            return false;
+        }
     }
 
     @Override

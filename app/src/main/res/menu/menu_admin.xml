@@ -13,9 +13,9 @@
             android:icon="@drawable/account"
             android:title="@string/title_account"/>
         <item
-            android:id="@+id/admin_gioHang"
+            android:id="@+id/admin_donHang"
             android:icon="@drawable/giohang"
-            android:title="@string/title_giohang"/>
+            android:title="@string/title_donHang"/>
         <item
             android:id="@+id/admin_thongKe"
             android:icon="@drawable/thongke"

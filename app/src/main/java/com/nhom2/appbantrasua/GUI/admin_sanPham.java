@@ -258,7 +258,6 @@ public class admin_sanPham extends Fragment {
         MyAdapter = new Product_Admin(products, this);
         recyclerView.setAdapter(MyAdapter);
 
-
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
     }
 

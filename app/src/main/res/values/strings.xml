@@ -3,7 +3,7 @@
 
     <string name="title_sanpham">Sản Phẩm</string>
     <string name="title_account">Tài Khoản</string>
-    <string name="title_giohang">Giỏ Hàng</string>
+    <string name="title_donHang">Đơn hàng</string>
     <string name="title_thongke">Thống kê</string>
     <string name="title_logout">Đăng xuất</string>
 

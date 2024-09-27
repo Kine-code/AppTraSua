@@ -1,5 +1,6 @@
 package com.nhom2.appbantrasua.GUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -50,14 +51,17 @@ public class Home_admin extends AppCompatActivity implements NavigationView.OnNa
         }else if (menuItem.getItemId() == R.id.admin_account){
             getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout, new admin_Account()).commit();
 
-        }else if (menuItem.getItemId() == R.id.admin_gioHang){
-            getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout, new admin_GioHang()).commit();
+        }else if (menuItem.getItemId() == R.id.admin_donHang){
+            getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout, new admin_DonHang()).commit();
 
         }else if (menuItem.getItemId() == R.id.admin_thongKe){
             getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout, new admin_ThongKe()).commit();
 
         }else if (menuItem.getItemId() == R.id.admin_logout){
-            Toast.makeText(this,"dang xuat",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
 
         }
         drawerLayout.closeDrawer(GravityCompat.START);

@@ -1,6 +1,9 @@
 package com.nhom2.appbantrasua.DAL;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,15 +62,23 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
         Product product = cartItems.get(position);
-        int imageResId = context.getResources().getIdentifier(product.getImageResource(), "drawable", context.getPackageName());
-        holder.productImageView.setImageResource(imageResId);
+
+        if (isBase64(product.getImageResource())){
+            byte[] decodedBytes = Base64.decode(product.getImageResource(), Base64.DEFAULT);
+            Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+            holder.productImageView.setImageBitmap(decodedBitmap);
+        }else {
+            int imageResId = context.getResources().getIdentifier(product.getImageResource(), "drawable", context.getPackageName());
+            holder.productImageView.setImageResource(imageResId);
+        }
+
         holder.productNameTextView.setText(product.getName());
         NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
         String formattedPrice = numberFormat.format(product.getPrice());
         holder.productPriceTextView.setText(formattedPrice + " VND");
         holder.productQualityTextView.setText(String.valueOf(product.getQuality()));
 
-//Start Button increase and decrase Cart
+        //Start Button increase and decrase Cart
         holder.increaseQuantityButtonCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,8 +110,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             }
         });
     }
-//End
 
+    public boolean isBase64(String s) {
+    try {
+        // Sử dụng Base64 của Android để giải mã chuỗi
+        Base64.decode(s, Base64.DEFAULT);
+        return true;
+    } catch (IllegalArgumentException e) {
+        // Bắt lỗi nếu chuỗi không phải Base64 hợp lệ
+        return false;
+    }
+}
 
     public void updateQualityProductItem(int productId, String username, Context context,int quality){
         List<Product> cartItems = loadCartItems(username, context);

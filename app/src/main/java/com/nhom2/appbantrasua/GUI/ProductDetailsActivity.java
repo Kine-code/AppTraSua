@@ -2,7 +2,10 @@ package com.nhom2.appbantrasua.GUI;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -24,10 +27,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     private ImageView productImageView;
     private TextView productNameTextView, productDescriptionTextView, productPriceTextView, quantityTextView;
-    private Button addToCartButton,increaseQuatityButtonProduct,
+    private Button addToCartButton, increaseQuatityButtonProduct,
             decreaseQuatityButtonProduct, buttonConfirmTopping;
     int quatity = 1;
     CartAdapter cartAdapter = new CartAdapter();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +43,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
             // Đảm bảo product không null
             if (product != null) {
-                // Hiển thị thông tin sản phẩm
-                int imageResId = this.getResources().getIdentifier(product.getImageResource(), "drawable", this.getPackageName());
-                productImageView.setImageResource(imageResId);
+                if (isBase64(product.getImageResource())) {
+                    byte[] decodedBytes = Base64.decode(product.getImageResource(), Base64.DEFAULT);
+                    Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                    productImageView.setImageBitmap(decodedBitmap);
+                } else {
+                    int imageResId = this.getResources().getIdentifier(product.getImageResource(), "drawable", this.getPackageName());
+                    productImageView.setImageResource(imageResId);
+                }
                 productNameTextView.setText(product.getName());
                 productDescriptionTextView.setText(product.getDescription());
 
@@ -50,8 +59,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 String formattedPrice = numberFormat.format(product.getPrice());
                 productPriceTextView.setText(formattedPrice + " VND");
             }
-
-// ButtonQuatityProduct
 
 
             increaseQuatityButtonProduct.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +75,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     quatity = Integer.parseInt(quantityTextView.getText().toString());
-                    if(quatity > 0)
+                    if (quatity > 0)
                         quatity--;
                     else
                         quatity = 0;
@@ -76,27 +83,34 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 }
             });
 
-
-            // Xử lý nút Thêm vào giỏ hàng
             addToCartButton.setOnClickListener(v -> {
                 product.setQuality(quatity);
-                if(quatity != 0){
+                if (quatity != 0) {
                     CartManager.getInstance().LoadAndSaveData(product, getBaseContext());
                     Toast.makeText(this, product.getName() + " đã được thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
                     // mở CartActivity khi ấn thêm sản phẩm
 //                Intent cartIntent = new Intent(ProductDetailsActivity.this, CartActivity.class);
 //                startActivity(cartIntent);
                     finish();
-                }else{
+                } else {
                     Toast.makeText(this, "Số lượng phaỉ lớn hơn 0", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
+    public boolean isBase64(String s) {
+        try {
+            // Sử dụng Base64 của Android để giải mã chuỗi
+            Base64.decode(s, Base64.DEFAULT);
+            return true;
+        } catch (IllegalArgumentException e) {
+            // Bắt lỗi nếu chuỗi không phải Base64 hợp lệ
+            return false;
+        }
+    }
 
-
-    private void DialogLogin(){
+    private void DialogLogin() {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.item_topping);
         buttonConfirmTopping = dialog.findViewById(R.id.confirmButtonTopping);
@@ -110,7 +124,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    void AnhXa(){
+    void AnhXa() {
         // Initialize UI components
         productImageView = findViewById(R.id.productImageView);
         productNameTextView = findViewById(R.id.productNameTextView);

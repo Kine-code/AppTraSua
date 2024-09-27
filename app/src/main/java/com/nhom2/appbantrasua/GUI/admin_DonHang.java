@@ -10,10 +10,9 @@ import androidx.fragment.app.Fragment;
 import com.nhom2.appbantrasua.R;
 
 
-public class admin_GioHang extends Fragment {
+public class admin_DonHang extends Fragment {
 
-    public admin_GioHang() {
-
+    public admin_DonHang() {
     }
 
 
@@ -21,6 +20,6 @@ public class admin_GioHang extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin__gio_hang, container, false);
+        return inflater.inflate(R.layout.fragment_admin__don_hang, container, false);
     }
 }
