@@ -259,7 +259,7 @@ public class admin_sanPham extends Fragment {
         recyclerView.setAdapter(MyAdapter);
 
 
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
     }
 
 

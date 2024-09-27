@@ -9,11 +9,12 @@
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
+        android:queryHint="Search Products"
         android:layout_height="50dp"
-        android:queryHint="Tên trà sữa..."
         android:iconifiedByDefault="false"
         android:background="@drawable/searchview_background"
         android:padding="8dp"
+        android:inputType="textFilter"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

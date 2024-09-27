@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,15 +17,18 @@ import com.nhom2.appbantrasua.GUI.ProductDetailsActivity;
 import com.nhom2.appbantrasua.R;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     private List<Product> productList;
+    private List<Product> productListFull;
     Context context;
     public ProductAdapter(List<Product> productList) {
         this.productList = productList;
+        this.productListFull = new ArrayList<>(productList);
     }
 
     @NonNull
@@ -57,7 +61,38 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             v.getContext().startActivity(intent);
         });
     }
+    public  Filter getFilter(){
+        return productFilter;
 
+    }
+    private Filter productFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Product> filteredProducts = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredProducts.addAll(productListFull); // No filter, return full list
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Product product : productListFull) {
+                    if (product.getName().toLowerCase().contains(filterPattern)) {
+                        filteredProducts.add(product);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredProducts;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            productList.clear();
+            productList.addAll((List) results.values);
+            notifyDataSetChanged(); // Notify adapter to refresh the view
+        }
+    };
     @Override
     public int getItemCount() {
         return productList.size();
@@ -75,7 +110,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             productImage = itemView.findViewById(R.id.productImage);
         }
     }
-
 
 
 }

@@ -1,5 +1,6 @@
 package com.nhom2.appbantrasua.GUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -58,7 +59,8 @@ public class Home_admin extends AppCompatActivity implements NavigationView.OnNa
 
         }else if (menuItem.getItemId() == R.id.admin_logout){
             Toast.makeText(this,"dang xuat",Toast.LENGTH_SHORT).show();
-
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

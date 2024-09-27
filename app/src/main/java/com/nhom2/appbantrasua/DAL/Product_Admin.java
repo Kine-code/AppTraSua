@@ -20,7 +20,9 @@ import com.nhom2.appbantrasua.Entity.Product;
 import com.nhom2.appbantrasua.GUI.admin_sanPham;
 import com.nhom2.appbantrasua.R;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 
 public class Product_Admin extends RecyclerView.Adapter<Product_Admin.MyViewHolder>{
@@ -50,6 +52,8 @@ public class Product_Admin extends RecyclerView.Adapter<Product_Admin.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Product sanPham = products.get(position);
+        NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
+        String formattedPrice = numberFormat.format(sanPham.getPrice());
         if (isBase64(sanPham.getImageResource())){
             byte[] decodedBytes = Base64.decode(sanPham.getImageResource(), Base64.DEFAULT);
             Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
@@ -59,7 +63,8 @@ public class Product_Admin extends RecyclerView.Adapter<Product_Admin.MyViewHold
             holder.imageView.setImageResource(imageResId);
         }
         holder.tensp.setText(sanPham.getName());
-        holder.giaCa.setText(String.format("%.2f VND", sanPham.getPrice()));
+//        holder.giaCa.setText(String.format("%.2f VND", sanPham.getPrice()));
+        holder.giaCa.setText(formattedPrice + " VND");
         holder.moTa.setText(sanPham.getDescription());
 
         holder.itemView.setOnClickListener(v -> {
