@@ -239,7 +239,7 @@ public class admin_sanPham extends Fragment {
     // Chuyển đổi Bitmap thành mảng byte
     private byte[] bitmapToByteArray(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream); // Bạn có thể thay đổi định dạng và chất lượng
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         return byteArrayOutputStream.toByteArray();
     }
 

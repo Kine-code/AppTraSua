@@ -50,10 +50,6 @@ public class Home_admin extends AppCompatActivity implements NavigationView.OnNa
             getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout, new admin_sanPham()).commit();
         }else if (menuItem.getItemId() == R.id.admin_account){
             getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout, new admin_Account()).commit();
-
-        }else if (menuItem.getItemId() == R.id.admin_donHang){
-            getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout, new admin_DonHang()).commit();
-
         }else if (menuItem.getItemId() == R.id.admin_thongKe){
             getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout, new admin_ThongKe()).commit();
 

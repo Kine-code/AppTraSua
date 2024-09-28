@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
+        android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:orientation="horizontal">
 
@@ -36,6 +36,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Full Name"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/txt_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:paddingBottom="10dp"
         android:orientation="horizontal">
 
@@ -54,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="Delete" />
     </LinearLayout>
 
     <LinearLayout
@@ -62,8 +86,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_account"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>
