@@ -19,7 +19,7 @@ import java.util.List;
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
     private Context context;
     private List<History> listHistory;
-    String nameProducts = "";
+
     public HistoryAdapter() {
     }
 
@@ -42,12 +42,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         if (history == null){
             return;
         }
+        String nameProducts = "";
+
         holder.textnamehistory.setText("Họ tên: " + history.getName());
         holder.textphonehistory.setText("Số điện thoại: " + history.getPhone());
         holder.textaddresshistory.setText("Địa chỉ nhận: " + history.getAddress());
 
         for (int i = 0; i < history.getListProduct().size(); i++){
-            nameProducts += "        - " + history.getListProduct().get(i).getName() + "\n";
+            nameProducts += "        - " + history.getListProduct().get(i).getName()+ "  x" + history.getListProduct().get(i).getQuality() + "\n";
         }
 
         holder.text_order_items.setText("Đồ uống: " + "\n" + nameProducts);

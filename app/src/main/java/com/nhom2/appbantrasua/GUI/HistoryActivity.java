@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nhom2.appbantrasua.CartManager;
 import com.nhom2.appbantrasua.DAL.CartAdapter;
 import com.nhom2.appbantrasua.DAL.HistoryAdapter;
+import com.nhom2.appbantrasua.DAO.DAO_History;
 import com.nhom2.appbantrasua.Entity.History;
 import com.nhom2.appbantrasua.Entity.Product;
 import com.nhom2.appbantrasua.HistoryManager;
@@ -27,7 +28,7 @@ import java.util.List;
 public class HistoryActivity extends AppCompatActivity {
     private RecyclerView historyRecyclerView;
     private HistoryAdapter _historyAdapter;
-
+    DAO_History daoHistory = new DAO_History();
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -40,6 +41,9 @@ public class HistoryActivity extends AppCompatActivity {
             return insets;
         });
 
+        daoHistory.InitLogin(this);
+
+
         Toolbar toolbar = findViewById(R.id.toolbarhistory);
         setSupportActionBar(toolbar);
 
@@ -48,7 +52,7 @@ public class HistoryActivity extends AppCompatActivity {
         }
         historyRecyclerView = findViewById(R.id.recycleViewhistory);
 
-        List<History> historyItems = HistoryManager.getInstance().getListHistory();
+        List<History> historyItems = daoHistory.loadHistoryByUsername(AccountActivity.getInstance().account.getUserName());
         ReLoadRycyclerView(historyItems);
     }
 

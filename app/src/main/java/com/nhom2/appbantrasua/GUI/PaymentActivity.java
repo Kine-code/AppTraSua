@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.nhom2.appbantrasua.CartManager;
 import com.nhom2.appbantrasua.DAL.CartAdapter;
+import com.nhom2.appbantrasua.DAO.DAO_History;
 import com.nhom2.appbantrasua.Entity.History;
 import com.nhom2.appbantrasua.Entity.Product;
 import com.nhom2.appbantrasua.HistoryManager;
@@ -32,6 +33,9 @@ public class PaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
         Init();
+
+        DAO_History daoHistory = new DAO_History();
+        daoHistory.InitLogin(this);
         fullname.setText(AccountActivity.getInstance().account.getName());
         String _price = getIntent().getStringExtra("totalPrice");
         price.setText(_price + " VND");
@@ -54,7 +58,11 @@ public class PaymentActivity extends AppCompatActivity {
                     history.setPhone(phoneNumber.getText().toString());
                     history.setTotalAmount(_price);
                     historyList.add(history);
-                    HistoryManager.getInstance().setListHistory(historyList);
+                    daoHistory.addHistory(AccountActivity.getInstance().account.getUserName(),
+                            history.getName(),
+                            history.getPhone(), history.getAddress(),history.getListProduct(), history.getTotalAmount());
+
+                    HistoryManager.getInstance().setListHistory(daoHistory.loadHistoryByUsername(AccountActivity.getInstance().account.getUserName()));
                     cart.clearCartItems(AccountActivity.getInstance().account.getUserName(), getBaseContext());
                     CartManager.getInstance().ClearList();
                     Intent intent = new Intent(PaymentActivity.this, MainActivity.class);

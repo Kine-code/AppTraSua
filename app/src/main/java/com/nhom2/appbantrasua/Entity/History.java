@@ -3,6 +3,7 @@ package com.nhom2.appbantrasua.Entity;
 import java.util.List;
 
 public class History {
+    public String userName;
     public String name;
     public String Phone;
     public String Address;
@@ -12,10 +13,11 @@ public class History {
 
     }
 
-    public History(String name, String sdt, String diaChi, List<Product> listProduct, String totalAmount) {
+    public History(String userName, String name, String phone, String address, List<Product> listProduct, String totalAmount) {
+        this.userName = userName;
         this.name = name;
-        this.Phone = sdt;
-        this.Address = diaChi;
+        Phone = phone;
+        Address = address;
         this.listProduct = listProduct;
         this.totalAmount = totalAmount;
     }
