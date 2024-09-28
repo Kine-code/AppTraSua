@@ -37,11 +37,23 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleViewhistory"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="471dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/textorderhistory"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_weight="1"
+        app:layout_constraintTop_toBottomOf="@id/textorderhistory" />
+
+    <TextView
+        android:id="@+id/sumhistory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text=""
+        android:textSize="28sp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/recycleViewhistory"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

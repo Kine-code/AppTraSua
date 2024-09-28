@@ -1,6 +1,8 @@
 package com.nhom2.appbantrasua.DAL;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Base64;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,9 +61,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
-        Product product = cartItems.get(position);
-        int imageResId = context.getResources().getIdentifier(product.getImageResource(), "drawable", context.getPackageName());
-        holder.productImageView.setImageResource(imageResId);
+        Product product = cartItems.get(cartItems.size() - 1 - position);
+
+
+        if (isBase64(product.getImageResource())){
+            byte[] decodedBytes = Base64.decode(product.getImageResource(), Base64.DEFAULT);
+            Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+            holder.productImageView.setImageBitmap(decodedBitmap);
+        }else {
+            int imageResId = context.getResources().getIdentifier(product.getImageResource(), "drawable", context.getPackageName());
+            holder.productImageView.setImageResource(imageResId);
+        }
+
+
+
         holder.productNameTextView.setText(product.getName());
         NumberFormat numberFormat = NumberFormat.getInstance(new Locale("vi", "VN"));
         String formattedPrice = numberFormat.format(product.getPrice());
@@ -101,6 +115,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 //End
 
+    public boolean isBase64(String s) {
+        // Kiểm tra chuỗi có khớp với định dạng Base64 không
+
+        s = s.replace("\n", "");
+
+        if (s == null || s.isEmpty()) {
+            return false;
+        }
+        String base64Pattern = "^[A-Za-z0-9+/]*={0,2}$"; // Biểu thức chính quy cho Base64
+        return s.matches(base64Pattern) && (s.length() % 4 == 0); // Kiểm tra cả chiều dài
+    }
 
     public void updateQualityProductItem(int productId, String username, Context context,int quality){
         List<Product> cartItems = loadCartItems(username, context);

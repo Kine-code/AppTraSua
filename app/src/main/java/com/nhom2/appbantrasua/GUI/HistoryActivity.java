@@ -3,6 +3,7 @@ package com.nhom2.appbantrasua.GUI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import com.nhom2.appbantrasua.CartManager;
 import com.nhom2.appbantrasua.DAL.CartAdapter;
 import com.nhom2.appbantrasua.DAL.HistoryAdapter;
 import com.nhom2.appbantrasua.DAO.DAO_History;
+import com.nhom2.appbantrasua.DAO.DAO_LoginRegister;
 import com.nhom2.appbantrasua.Entity.History;
 import com.nhom2.appbantrasua.Entity.Product;
 import com.nhom2.appbantrasua.HistoryManager;
@@ -29,6 +31,7 @@ public class HistoryActivity extends AppCompatActivity {
     private RecyclerView historyRecyclerView;
     private HistoryAdapter _historyAdapter;
     DAO_History daoHistory = new DAO_History();
+    DAO_LoginRegister daoRegister = new DAO_LoginRegister();
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -42,7 +45,7 @@ public class HistoryActivity extends AppCompatActivity {
         });
 
         daoHistory.InitLogin(this);
-
+        daoRegister.InitLogin(this);
 
         Toolbar toolbar = findViewById(R.id.toolbarhistory);
         setSupportActionBar(toolbar);
@@ -51,9 +54,23 @@ public class HistoryActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         historyRecyclerView = findViewById(R.id.recycleViewhistory);
+        TextView sumHistory = findViewById(R.id.sumhistory);
+        TextView textorderhistory = findViewById(R.id.textorderhistory);
 
-        List<History> historyItems = daoHistory.loadHistoryByUsername(AccountActivity.getInstance().account.getUserName());
-        ReLoadRycyclerView(historyItems);
+        if(daoRegister.checkAdmin(AccountActivity.getInstance().account.getUserName()) == 1){
+            List<History> historyItems = daoHistory.LoadAllHistory();
+            int sum = 0;
+            for (History history :historyItems) {
+                sum += Integer.parseInt(history.getTotalAmount().replace(".", ""));
+            }
+            textorderhistory.setText("Thống kê");
+            sumHistory.setText("Tổng tiền : " + sum);
+
+            ReLoadRycyclerView(historyItems);
+        }else{
+            List<History> historyItems = daoHistory.loadHistoryByUsername(AccountActivity.getInstance().account.getUserName());
+            ReLoadRycyclerView(historyItems);
+        }
     }
 
     public void ReLoadRycyclerView(List<History> historyAdapter){
@@ -65,11 +82,22 @@ public class HistoryActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+
             case android.R.id.home:
-                Intent intent = new Intent(HistoryActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
+                Intent intent;
+                if(daoRegister.checkAdmin(AccountActivity.getInstance().account.getUserName()) == 1){
+                    intent = new Intent(HistoryActivity.this, Home_admin.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    intent = new Intent(HistoryActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

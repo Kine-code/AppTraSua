@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -40,7 +41,8 @@ public class admin_sanPham extends Fragment {
     DAO_Product daoProduct = new DAO_Product();
     String encodedImage = "";
 
-    EditText txt_idSanPham, txt_tenSanPham, txt_moTa, txt_giaCa;
+    TextView txt_idSanPham;
+    EditText  txt_tenSanPham, txt_moTa, txt_giaCa;
     Button btn_them,btn_xoa,btn_sua,btn_clear,btn_addImage;
     public ImageView img_sanPham;
     RecyclerView recyclerView;
@@ -64,27 +66,31 @@ public class admin_sanPham extends Fragment {
         btn_them.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = txt_idSanPham.getText().toString().trim();
-                String nameproduct = txt_tenSanPham.getText().toString().trim();
-                String description = txt_moTa.getText().toString().trim();
-                String price = txt_giaCa.getText().toString().trim();
-                String imgprd = "";
-                if (encodedImage != ""){
-                    imgprd = encodedImage.toString().trim();
-                }
+                try {
+                    String id = String.valueOf(daoProduct.ShowListProduct().size() );
+                    String nameproduct = txt_tenSanPham.getText().toString().trim();
+                    String description = txt_moTa.getText().toString().trim();
+                    String price = txt_giaCa.getText().toString().trim();
+                    String imgprd = "";
+                    if (encodedImage != ""){
+                        imgprd = encodedImage.toString().trim();
+                    }
 
-                if (id.isEmpty() || nameproduct.isEmpty() || description.isEmpty() || price.isEmpty() || imgprd.isEmpty()) {
-                    Toast.makeText(view.getContext(), "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
-                    return;
-                }else {
-                    daoProduct.Insert_Product(id,nameproduct,description,price,imgprd);
-                    Toast.makeText(view.getContext(), "Thêm sản phẩm thành công!", Toast.LENGTH_SHORT).show();
-                    LoadShowProduct();
-                    txt_idSanPham.setText("");
-                    txt_tenSanPham.setText("");
-                    txt_moTa.setText("");
-                    txt_giaCa.setText("");
-                    img_sanPham.setImageResource(0);
+                    if (id.isEmpty() || nameproduct.isEmpty() || description.isEmpty() || price.isEmpty() || imgprd.isEmpty()) {
+                        Toast.makeText(view.getContext(), "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }else {
+                        daoProduct.Insert_Product(id,nameproduct,description,price,imgprd);
+                        Toast.makeText(view.getContext(), "Thêm sản phẩm thành công!", Toast.LENGTH_SHORT).show();
+                        LoadShowProduct();
+                        txt_idSanPham.setText("");
+                        txt_tenSanPham.setText("");
+                        txt_moTa.setText("");
+                        txt_giaCa.setText("");
+                        img_sanPham.setImageResource(0);
+                    }
+                }catch (Exception e){
+
                 }
             }
         });
@@ -92,38 +98,44 @@ public class admin_sanPham extends Fragment {
         btn_sua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = txt_idSanPham.getText().toString().trim();
-                String nameproduct = txt_tenSanPham.getText().toString().trim();
-                String description = txt_moTa.getText().toString().trim();
-                String price = txt_giaCa.getText().toString().trim();
-                String imgprd = "";
-                Log.d("id","id"+id);
-                Log.d("name","id"+nameproduct);
-                Log.d("moTa","id"+description);
-                Log.d("gia","id"+price);
-                if (!encodedImage.isEmpty()) {
-                    imgprd = encodedImage.toString().trim();
+
+                try {
+                    String id = txt_idSanPham.getText().toString().trim();
+                    String nameproduct = txt_tenSanPham.getText().toString().trim();
+                    String description = txt_moTa.getText().toString().trim();
+                    String price = txt_giaCa.getText().toString().trim();
+                    String imgprd = "";
+                    Log.d("id","id"+id);
+                    Log.d("name","id"+nameproduct);
+                    Log.d("moTa","id"+description);
+                    Log.d("gia","id"+price);
+                    if (!encodedImage.isEmpty()) {
+                        imgprd = encodedImage.toString().trim();
+                    }
+
+                    if (id.isEmpty()) {
+                        Toast.makeText(view.getContext(), "ID sản phẩm không được để trống!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    if (nameproduct.isEmpty() || description.isEmpty() || price.isEmpty()) {
+                        Toast.makeText(view.getContext(), "Vui lòng điền đầy đủ thông tin sản phẩm!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    daoProduct.UpdateProductByID(id, nameproduct, description, price, imgprd);
+
+                    txt_idSanPham.setText("");
+                    txt_tenSanPham.setText("");
+                    txt_moTa.setText("");
+                    txt_giaCa.setText("");
+                    img_sanPham.setImageResource(0);
+                    Toast.makeText(view.getContext(), "Cập nhật sản phẩm thành công!", Toast.LENGTH_SHORT).show();
+                    LoadShowProduct();
+                }catch (Exception e){
+
                 }
 
-                if (id.isEmpty()) {
-                    Toast.makeText(view.getContext(), "ID sản phẩm không được để trống!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (nameproduct.isEmpty() || description.isEmpty() || price.isEmpty()) {
-                    Toast.makeText(view.getContext(), "Vui lòng điền đầy đủ thông tin sản phẩm!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                daoProduct.UpdateProductByID(id, nameproduct, description, price, imgprd);
-
-                txt_idSanPham.setText("");
-                txt_tenSanPham.setText("");
-                txt_moTa.setText("");
-                txt_giaCa.setText("");
-                img_sanPham.setImageResource(0);
-                Toast.makeText(view.getContext(), "Cập nhật sản phẩm thành công!", Toast.LENGTH_SHORT).show();
-                LoadShowProduct();
             }
         });
 
@@ -131,26 +143,30 @@ public class admin_sanPham extends Fragment {
         btn_xoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = txt_idSanPham.getText().toString().trim();
-                Log.e("DoneInsertID","id" + id);
-                if (id.isEmpty()){
-                    Toast.makeText(view.getContext(),"Không tìm thấy id sản phẩm",Toast.LENGTH_SHORT).show();
-                }else {
-                    boolean row = daoProduct.DeLeTeProduct(id);
-                    if (row){
-                        txt_idSanPham.setText("");
-                        txt_tenSanPham.setText("");
-                        txt_moTa.setText("");
-                        txt_giaCa.setText("");
-                        img_sanPham.setImageResource(0);
-                        LoadShowProduct();
-                        Toast.makeText(view.getContext(),"Xóa sản phẩm thành công",Toast.LENGTH_SHORT).show();
+
+                try {
+                    String id = txt_idSanPham.getText().toString().trim();
+                    Log.e("DoneInsertID","id" + id);
+                    if (id.isEmpty()){
+                        Toast.makeText(view.getContext(),"Không tìm thấy id sản phẩm",Toast.LENGTH_SHORT).show();
                     }else {
-                        Toast.makeText(view.getContext(),"Xóa sản phẩm thất bại",Toast.LENGTH_SHORT).show();
+                        boolean row = daoProduct.DeLeTeProduct(id);
+                        if (row){
+                            txt_idSanPham.setText("");
+                            txt_tenSanPham.setText("");
+                            txt_moTa.setText("");
+                            txt_giaCa.setText("");
+                            img_sanPham.setImageResource(0);
+                            LoadShowProduct();
+                            Toast.makeText(view.getContext(),"Xóa sản phẩm thành công",Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(view.getContext(),"Xóa sản phẩm thất bại",Toast.LENGTH_SHORT).show();
+                        }
+
                     }
+                }catch (Exception e){
 
                 }
-
             }
         });
 

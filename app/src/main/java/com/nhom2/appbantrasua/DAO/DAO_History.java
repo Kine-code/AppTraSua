@@ -24,5 +24,7 @@ public class DAO_History {
         dal.addHistory(username, name, phone, address, listProduct, totalAmount);
     }
 
-
+    public List<History> LoadAllHistory(){
+        return dal.LoadAllHistory();
+    }
 }

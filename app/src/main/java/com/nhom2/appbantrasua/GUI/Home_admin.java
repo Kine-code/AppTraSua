@@ -55,8 +55,9 @@ public class Home_admin extends AppCompatActivity implements NavigationView.OnNa
             getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout, new admin_GioHang()).commit();
 
         }else if (menuItem.getItemId() == R.id.admin_thongKe){
-            getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout, new admin_ThongKe()).commit();
-
+            Intent intent = new Intent(Home_admin.this, HistoryActivity.class);
+            Toast.makeText(Home_admin.this, "Lịch sử đã được chọn", Toast.LENGTH_SHORT).show();
+            startActivity(intent);
         }else if (menuItem.getItemId() == R.id.admin_logout){
             Toast.makeText(this,"dang xuat",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LoginActivity.class);

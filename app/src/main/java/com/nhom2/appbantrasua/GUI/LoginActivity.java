@@ -65,6 +65,8 @@ public class LoginActivity extends AppCompatActivity
         try{
             if(daoRegister.checkAccount(userName, password) != null){
                 if (daoRegister.checkAdmin(userName) == 1) {
+                    account = daoRegister.checkAccount(userName, password);
+                    AccountActivity.getInstance().account = this.account;
                     homeAdmin();
                     finish();
                 } else {

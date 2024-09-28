@@ -1,5 +1,6 @@
 package com.nhom2.appbantrasua.DAL;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import java.util.List;
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
     private Context context;
     private List<History> listHistory;
+    private float sum = 0;
 
     public HistoryAdapter() {
     }
@@ -36,9 +38,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     }
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull HistoryAdapter.HistoryViewHolder holder, int position) {
-        History history = listHistory.get(position);
+
+        History history = listHistory.get(listHistory.size() - 1 - position);
         if (history == null){
             return;
         }
@@ -55,7 +59,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         holder.text_order_items.setText("Đồ uống: " + "\n" + nameProducts);
 
         holder.text_total_amount.setText("Tổng tiền: " + history.getTotalAmount());
-
     }
 
     @Override

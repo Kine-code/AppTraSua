@@ -13,6 +13,14 @@ public class History {
 
     }
 
+    public History(String name, String phone, String address, List<Product> listProduct, String totalAmount) {
+        this.name = name;
+        Phone = phone;
+        Address = address;
+        this.listProduct = listProduct;
+        this.totalAmount = totalAmount;
+    }
+
     public History(String userName, String name, String phone, String address, List<Product> listProduct, String totalAmount) {
         this.userName = userName;
         this.name = name;

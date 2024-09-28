@@ -2,7 +2,10 @@ package com.nhom2.appbantrasua.GUI;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -39,9 +42,18 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
             // Đảm bảo product không null
             if (product != null) {
+
                 // Hiển thị thông tin sản phẩm
-                int imageResId = this.getResources().getIdentifier(product.getImageResource(), "drawable", this.getPackageName());
-                productImageView.setImageResource(imageResId);
+
+                if (isBase64(product.getImageResource())){
+                    byte[] decodedBytes = Base64.decode(product.getImageResource(), Base64.DEFAULT);
+                    Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                    productImageView.setImageBitmap(decodedBitmap);
+                }else {
+                    int imageResId = this.getResources().getIdentifier(product.getImageResource(), "drawable", this.getPackageName());
+                    productImageView.setImageResource(imageResId);
+                }
+
                 productNameTextView.setText(product.getName());
                 productDescriptionTextView.setText(product.getDescription());
 
@@ -94,6 +106,18 @@ public class ProductDetailsActivity extends AppCompatActivity {
         }
     }
 
+
+    public boolean isBase64(String s) {
+        // Kiểm tra chuỗi có khớp với định dạng Base64 không
+
+        s = s.replace("\n", "");
+
+        if (s == null || s.isEmpty()) {
+            return false;
+        }
+        String base64Pattern = "^[A-Za-z0-9+/]*={0,2}$"; // Biểu thức chính quy cho Base64
+        return s.matches(base64Pattern) && (s.length() % 4 == 0); // Kiểm tra cả chiều dài
+    }
 
 
     private void DialogLogin(){

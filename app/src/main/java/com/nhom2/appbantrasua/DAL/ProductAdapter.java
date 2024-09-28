@@ -2,6 +2,9 @@ package com.nhom2.appbantrasua.DAL;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +54,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.productName.setText(product.getName());
         holder.productDescription.setText(product.getDescription());
         holder.productPrice.setText(formattedPrice + " VND");
-        int imageResId = context.getResources().getIdentifier(product.getImageResource(), "drawable", context.getPackageName());
-        holder.productImage.setImageResource(imageResId);
+
+        if (isBase64(product.getImageResource())){
+            byte[] decodedBytes = Base64.decode(product.getImageResource(), Base64.DEFAULT);
+            Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+            holder.productImage.setImageBitmap(decodedBitmap);
+        }else {
+            int imageResId = context.getResources().getIdentifier(product.getImageResource(), "drawable", context.getPackageName());
+            holder.productImage.setImageResource(imageResId);
+        }
 
         // Xử lý khi người dùng nhấn vào sản phẩm
         holder.itemView.setOnClickListener(v -> {
@@ -61,6 +71,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             v.getContext().startActivity(intent);
         });
     }
+
+    public boolean isBase64(String s) {
+        // Kiểm tra chuỗi có khớp với định dạng Base64 không
+
+        s = s.replace("\n", "");
+
+        if (s == null || s.isEmpty()) {
+            return false;
+        }
+        String base64Pattern = "^[A-Za-z0-9+/]*={0,2}$"; // Biểu thức chính quy cho Base64
+        return s.matches(base64Pattern) && (s.length() % 4 == 0); // Kiểm tra cả chiều dài
+    }
+
     public  Filter getFilter(){
         return productFilter;
 

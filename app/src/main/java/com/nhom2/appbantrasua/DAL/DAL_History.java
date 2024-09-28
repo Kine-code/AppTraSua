@@ -95,4 +95,37 @@ public class DAL_History implements Serializable {
         db.close();
         return historyList;
     }
+
+
+    public List<History> LoadAllHistory() {
+        List<History> historyList = new ArrayList<>();
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+
+        Cursor cursor = databaseHelper.GetData("SELECT * FROM History");
+
+        if (cursor != null && cursor.moveToFirst()) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<Product>>() {
+            }.getType();
+
+            do {
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME));
+                String phone = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHONE));
+                String address = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ADDRESS));
+                String listProductJson = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LIST_PRODUCT));
+                String totalAmount = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TOTAL_AMOUNT));
+
+                // Convert JSON string back to list of products
+                List<Product> listProduct = gson.fromJson(listProductJson, type);
+
+                // Add each history to the list
+                historyList.add(new History(name, phone, address, listProduct, totalAmount));
+
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+        db.close();
+        return historyList;
+    }
 }
