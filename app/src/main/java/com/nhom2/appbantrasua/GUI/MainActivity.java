@@ -110,7 +110,9 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else if (id == R.id.nav_contact) {
+                    Intent intent = new Intent(MainActivity.this, ContacActivity.class);
                     Toast.makeText(MainActivity.this, "Liên hệ được chọn", Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
                 } else if (id == R.id.nav_account) {
                     // Xử lý mục Tài khoản
                     Intent intent = new Intent(MainActivity.this, AccountActivity.class);

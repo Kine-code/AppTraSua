@@ -8,7 +8,10 @@ import com.nhom2.appbantrasua.DatabaseHelper;
 import com.nhom2.appbantrasua.Entity.LoginRegister;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
@@ -76,5 +79,41 @@ public class DAL_LoginRegister implements Serializable {
         cursor.close();
         return (quyen == 1) ? 1 : 0;
     }
-
+    public List<LoginRegister> ShowAccount(){
+        List<LoginRegister> list = new ArrayList<>();
+        Cursor cursor = databaseHelper.GetData("SELECT * FROM Account");
+        try {
+            if (cursor.getCount() > 0){
+                while (cursor.moveToNext()){
+                    list.add(
+                            new LoginRegister(
+                                    cursor.getString(0),
+                                    cursor.getString(1),
+                                    cursor.getString(2),
+                                    cursor.getString(3),
+                                    cursor.getString(4))
+                    );
+                }
+            }
+        }finally {
+            cursor.close();
+        }
+        return list;
+    }
+    public boolean DeleteAccount(String userName) {
+        SQLiteDatabase data = databaseHelper.getWritableDatabase();
+        String query = "DELETE FROM Account WHERE username = ?";
+        SQLiteStatement sql = data.compileStatement(query);
+        int rowWrongs = 0;
+        Log.e("DeleteAccount","123");
+        try {
+            sql.bindString(1, userName);
+            rowWrongs = sql.executeUpdateDelete();
+        } catch (Exception e) {
+            Log.d("DeleteAccount", "error: " + e.getMessage());
+        } finally {
+            sql.close();
+        }
+        return rowWrongs > 0;
+    }
 }

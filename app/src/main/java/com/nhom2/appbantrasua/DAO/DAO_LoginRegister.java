@@ -6,6 +6,7 @@ import com.nhom2.appbantrasua.DAL.DAL_LoginRegister;
 import com.nhom2.appbantrasua.Entity.LoginRegister;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class DAO_LoginRegister implements Serializable {
     DAL_LoginRegister dal = new DAL_LoginRegister();
@@ -28,5 +29,11 @@ public class DAO_LoginRegister implements Serializable {
 
     public void ChangePasswordAccount(String userName, String newPassword){
         dal.ChangePasswordAccount(userName, newPassword);
+    }
+    public List<LoginRegister> ShowAllAccount(){
+        return dal.ShowAccount();
+    }
+    public boolean DeleteAccount(String userName){
+        return dal.DeleteAccount(userName);
     }
 }

@@ -32,6 +32,7 @@
         <activity android:name=".GUI.PaymentActivity"/>
         <activity android:name=".GUI.HistoryActivity"/>
         <activity android:name=".GUI.Home_admin"/>
+        <activity android:name=".GUI.ContacActivity"/>
 
     </application>
 

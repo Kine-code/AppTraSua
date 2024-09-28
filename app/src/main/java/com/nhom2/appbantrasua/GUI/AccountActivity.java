@@ -1,6 +1,7 @@
 package com.nhom2.appbantrasua.GUI;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
@@ -76,6 +77,11 @@ public class AccountActivity  extends AppCompatActivity {
                 finish();
                 account = null;
                 CartManager.getInstance().ClearList();
+                SharedPreferences sharedPreferences = getSharedPreferences("userName_password login", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("UserName", "");
+                editor.putString("Password", "");
+                editor.commit();
                 Intent intent = new Intent(AccountActivity.this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);

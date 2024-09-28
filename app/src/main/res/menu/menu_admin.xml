@@ -13,10 +13,6 @@
             android:icon="@drawable/account"
             android:title="@string/title_account"/>
         <item
-            android:id="@+id/admin_gioHang"
-            android:icon="@drawable/giohang"
-            android:title="@string/title_giohang"/>
-        <item
             android:id="@+id/admin_thongKe"
             android:icon="@drawable/thongke"
             android:title="@string/title_thongke"/>
