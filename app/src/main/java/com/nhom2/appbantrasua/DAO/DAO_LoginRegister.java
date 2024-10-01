@@ -1,10 +1,8 @@
 package com.nhom2.appbantrasua.DAO;
 
 import android.content.Context;
-
 import com.nhom2.appbantrasua.DAL.DAL_LoginRegister;
 import com.nhom2.appbantrasua.Entity.LoginRegister;
-
 import java.io.Serializable;
 import java.util.List;
 

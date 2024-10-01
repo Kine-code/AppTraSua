@@ -1,11 +1,9 @@
 package com.nhom2.appbantrasua.DAO;
 
 import android.content.Context;
-
 import com.nhom2.appbantrasua.DAL.DAL_History;
 import com.nhom2.appbantrasua.Entity.History;
 import com.nhom2.appbantrasua.Entity.Product;
-
 import java.util.List;
 
 public class DAO_History {

@@ -5,15 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import androidx.viewpager.widget.PagerAdapter;
-
 import java.util.List;
 
 public class ImageSliderAdapter extends PagerAdapter {
 
     private Context context;
-    private List<Integer> imageList; // Danh sách các hình ảnh (resource ids)
+    private List<Integer> imageList;
 
     public ImageSliderAdapter(Context context, List<Integer> imageList) {
         this.context = context;

@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -26,12 +25,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.nhom2.appbantrasua.DAL.Product_Admin;
 import com.nhom2.appbantrasua.DAO.DAO_Product;
 import com.nhom2.appbantrasua.Entity.Product;
 import com.nhom2.appbantrasua.R;
-
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.List;

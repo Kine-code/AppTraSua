@@ -1,6 +1,5 @@
 package com.nhom2.appbantrasua;
 
-import com.nhom2.appbantrasua.DAL.HistoryAdapter;
 import com.nhom2.appbantrasua.Entity.History;
 
 import java.util.ArrayList;

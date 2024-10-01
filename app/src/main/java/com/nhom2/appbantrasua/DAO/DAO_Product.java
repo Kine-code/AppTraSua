@@ -1,13 +1,9 @@
 package com.nhom2.appbantrasua.DAO;
 
 import android.content.Context;
-import android.util.Log;
-
 import com.nhom2.appbantrasua.DAL.DAL_Product;
 import com.nhom2.appbantrasua.Entity.Product;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DAO_Product implements Serializable {

@@ -6,11 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.nhom2.appbantrasua.DAO.DAO_LoginRegister;
 import com.nhom2.appbantrasua.Entity.LoginRegister;
 import com.nhom2.appbantrasua.GUI.admin_Account;
 import com.nhom2.appbantrasua.R;
@@ -21,7 +18,6 @@ public class Account_Admin extends RecyclerView.Adapter<Account_Admin.MyViewHold
     admin_Account _adminAccount;
     private List<LoginRegister> accounts;
     Context context;
-    DAO_LoginRegister daoLoginRegister = new DAO_LoginRegister();
 
     public Account_Admin(admin_Account _adminAccount, List<LoginRegister> accounts) {
         this._adminAccount = _adminAccount;

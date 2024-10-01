@@ -12,14 +12,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.nhom2.appbantrasua.CartManager;
 import com.nhom2.appbantrasua.DAL.CartAdapter;
 import com.nhom2.appbantrasua.Entity.Product;
 import com.nhom2.appbantrasua.R;
-
 import java.text.NumberFormat;
 import java.util.Locale;
 

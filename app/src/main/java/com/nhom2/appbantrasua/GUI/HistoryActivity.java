@@ -13,18 +13,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.nhom2.appbantrasua.CartManager;
-import com.nhom2.appbantrasua.DAL.CartAdapter;
 import com.nhom2.appbantrasua.DAL.HistoryAdapter;
 import com.nhom2.appbantrasua.DAO.DAO_History;
 import com.nhom2.appbantrasua.DAO.DAO_LoginRegister;
 import com.nhom2.appbantrasua.Entity.History;
-import com.nhom2.appbantrasua.Entity.Product;
-import com.nhom2.appbantrasua.HistoryManager;
 import com.nhom2.appbantrasua.R;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity {

@@ -4,13 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nhom2.appbantrasua.DatabaseHelper;
 import com.nhom2.appbantrasua.Entity.History;
 import com.nhom2.appbantrasua.Entity.Product;
-
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;

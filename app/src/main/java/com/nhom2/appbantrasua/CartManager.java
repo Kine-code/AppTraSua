@@ -6,8 +6,6 @@ import android.content.Context;
 import com.nhom2.appbantrasua.DAL.CartAdapter;
 import com.nhom2.appbantrasua.Entity.Product;
 import com.nhom2.appbantrasua.GUI.AccountActivity;
-import com.nhom2.appbantrasua.GUI.CartActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 

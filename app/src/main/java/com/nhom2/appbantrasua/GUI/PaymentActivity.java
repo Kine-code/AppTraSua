@@ -7,9 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.nhom2.appbantrasua.CartManager;
 import com.nhom2.appbantrasua.DAL.CartAdapter;
 import com.nhom2.appbantrasua.DAO.DAO_History;
@@ -17,11 +15,8 @@ import com.nhom2.appbantrasua.Entity.History;
 import com.nhom2.appbantrasua.Entity.Product;
 import com.nhom2.appbantrasua.HistoryManager;
 import com.nhom2.appbantrasua.R;
-
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class PaymentActivity extends AppCompatActivity {
     TextView fullname, price;

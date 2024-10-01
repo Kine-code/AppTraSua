@@ -3,14 +3,11 @@ package com.nhom2.appbantrasua.DAL;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-
 import com.nhom2.appbantrasua.DatabaseHelper;
 import com.nhom2.appbantrasua.Entity.LoginRegister;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;

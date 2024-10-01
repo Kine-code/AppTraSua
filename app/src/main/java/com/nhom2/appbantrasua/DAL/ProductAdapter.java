@@ -11,14 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.nhom2.appbantrasua.Entity.Product;
 import com.nhom2.appbantrasua.GUI.ProductDetailsActivity;
 import com.nhom2.appbantrasua.R;
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;

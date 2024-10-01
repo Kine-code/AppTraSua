@@ -8,12 +8,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.nhom2.appbantrasua.DAL.CartAdapter;
 import com.nhom2.appbantrasua.CartManager;
 import com.nhom2.appbantrasua.Entity.Product;

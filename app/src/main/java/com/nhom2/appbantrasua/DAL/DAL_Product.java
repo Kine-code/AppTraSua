@@ -5,14 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.nhom2.appbantrasua.DatabaseHelper;
 import com.nhom2.appbantrasua.Entity.Product;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
